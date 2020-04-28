@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="005SuinPhVVcjIK7c7flsNVdrDPrmLYPfUJQgH27uOI">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"ljason.cn","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="版本控制(Revision control)是一种软体工程技巧，籍以在开发的过程中，确保由不同人所编辑的同一档案都得到更新。版本控制软件中我最常用的就是Git。   　　Git 是一个开源的分布式版本控制系统，用以有效、高速的处理从很小到非常大的项目版本管理。   　　分布式相比于集中式的最大区别在于开发者可以提交到本地，每个开发者通过克隆（git clone），在本地机器上拷贝一个完整的 G">
+<meta property="og:type" content="article">
+<meta property="og:title" content="搭建Android开发环境04——Git">
+<meta property="og:url" content="https://ljason.cn/Android-Develop-SetUp-Git/">
+<meta property="og:site_name" content="野生程序猴子">
+<meta property="og:description" content="版本控制(Revision control)是一种软体工程技巧，籍以在开发的过程中，确保由不同人所编辑的同一档案都得到更新。版本控制软件中我最常用的就是Git。   　　Git 是一个开源的分布式版本控制系统，用以有效、高速的处理从很小到非常大的项目版本管理。   　　分布式相比于集中式的最大区别在于开发者可以提交到本地，每个开发者通过克隆（git clone），在本地机器上拷贝一个完整的 G">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://ljason.cn/images/Android/Develop/SetUp/Git/00.webp">
+<meta property="og:image" content="https://ljason.cn/images/Android/Develop/SetUp/Git/01.webp">
+<meta property="og:image" content="https://ljason.cn/images/Android/Develop/SetUp/Git/02.webp">
+<meta property="og:image" content="https://ljason.cn/images/Android/Develop/SetUp/Git/03.webp">
+<meta property="og:image" content="https://ljason.cn/images/Android/Develop/SetUp/Git/04.webp">
+<meta property="og:image" content="https://ljason.cn/images/Android/Develop/SetUp/Git/05.webp">
+<meta property="og:image" content="https://ljason.cn/images/Android/Develop/SetUp/Git/06.webp">
+<meta property="og:image" content="https://ljason.cn/images/Android/Develop/SetUp/Git/07.webp">
+<meta property="og:image" content="https://ljason.cn/images/Android/Develop/SetUp/Git/07-1.webp">
+<meta property="og:image" content="https://ljason.cn/images/Android/Develop/SetUp/Git/07-2.webp">
+<meta property="og:image" content="https://ljason.cn/images/Android/Develop/SetUp/Git/08.webp">
+<meta property="og:image" content="https://ljason.cn/images/Android/Develop/SetUp/Git/09.webp">
+<meta property="og:image" content="https://ljason.cn/images/Android/Develop/SetUp/Git/10.webp">
+<meta property="og:image" content="https://ljason.cn/images/Android/Develop/SetUp/Git/11.webp">
+<meta property="og:image" content="https://ljason.cn/images/Android/Develop/SetUp/Git/12.webp">
+<meta property="article:published_time" content="2015-10-29T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-04-28T16:36:31.512Z">
+<meta property="article:author" content="LJason">
+<meta property="article:tag" content="Android">
+<meta property="article:tag" content="搭建">
+<meta property="article:tag" content="环境">
+<meta property="article:tag" content="教程">
+<meta property="article:tag" content="Git">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://ljason.cn/images/Android/Develop/SetUp/Git/00.webp">
+
+<link rel="canonical" href="https://ljason.cn/Android-Develop-SetUp-Git/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>搭建Android开发环境04——Git | 野生程序猴子</title>
+  
+    <script>
+      function sendPageView() {
+        if (CONFIG.hostname !== location.hostname) return;
+        var uid = localStorage.getItem('uid') || (Math.random() + '.' + Math.random());
+        localStorage.setItem('uid', uid);
+        navigator.sendBeacon('https://www.google-analytics.com/collect', new URLSearchParams({
+          v  : 1,
+          tid: 'UA-71060796-2',
+          cid: uid,
+          t  : 'pageview',
+          dp : encodeURIComponent(location.pathname)
+        }));
+      }
+      document.addEventListener('pjax:complete', sendPageView);
+      sendPageView();
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="野生程序猴子" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">野生程序猴子</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://ljason.cn/Android-Develop-SetUp-Git/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="LJason">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="野生程序猴子">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          搭建Android开发环境04——Git
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2015-10-30 00:00:00" itemprop="dateCreated datePublished" datetime="2015-10-30T00:00:00+08:00">2015-10-30</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-04-29 00:36:31" itemprop="dateModified" datetime="2020-04-29T00:36:31+08:00">2020-04-29</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android%E5%BC%80%E5%8F%91/" itemprop="url" rel="index"><span itemprop="name">Android开发</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>　　版本控制(Revision control)是一种软体工程技巧，籍以在开发的过程中，确保由不同人所编辑的同一档案都得到更新。版本控制软件中我最常用的就是Git。  </p>
+<p>　　Git 是一个开源的分布式版本控制系统，用以有效、高速的处理从很小到非常大的项目版本管理。  </p>
+<p>　　分布式相比于集中式的最大区别在于开发者可以提交到本地，每个开发者通过克隆（git clone），在本地机器上拷贝一个完整的 Git 仓库。  </p>
+<p>　　大家都是是程序猿，所以版本控制的好处我就不说了，下面开始教程。　　</p>
+<a id="more"></a>
+
+<h1 id="安装Git"><a href="#安装Git" class="headerlink" title="安装Git"></a>安装Git</h1><p>　　先去<a href="http://www.git-scm.com/download/" target="_blank" rel="noopener">官网</a>下载。这下载速度有点慢，可能要翻墙。  </p>
+<center>
+    <p><img src="/images/Android/Develop/SetUp/Git/00.webp" align="center"></p>
+</center>
+
+<p>　　下载完安装，到这里按照实际情况勾选，我是全选。  </p>
+<center>
+    <p><img src="/images/Android/Develop/SetUp/Git/01.webp" align="center"></p>
+</center>
+
+<p>　　这是创建开始文件夹，按照实际情况。  </p>
+<center>
+    <p><img src="/images/Android/Develop/SetUp/Git/02.webp" align="center"></p>
+</center>
+
+<p>　　这是调整环境变量，默认即可。  </p>
+<center>
+    <p><img src="/images/Android/Develop/SetUp/Git/03.webp" align="center"></p>
+</center>
+
+<p>　　换行结束符，默认。  </p>
+<center>
+    <p><img src="/images/Android/Develop/SetUp/Git/04.webp" align="center"></p>
+</center>
+
+<p>　　终端风格，我喜欢默认的。第二个是 Windows 风格。  </p>
+<center>
+    <p><img src="/images/Android/Develop/SetUp/Git/05.webp" align="center"></p>
+</center>
+
+<p>　　启用文件缓存。  </p>
+<center>
+    <p><img src="/images/Android/Develop/SetUp/Git/06.webp" align="center"></p>
+</center>
+
+<h1 id="安装TortoiseGit"><a href="#安装TortoiseGit" class="headerlink" title="安装TortoiseGit"></a>安装TortoiseGit</h1><p>　　TortoiseGit 是 Windows 下不错的一款 Git 客户端工具。  </p>
+<p>　　先去官网下载<a href="http://download.tortoisegit.org/" target="_blank" rel="noopener">小乌龟</a>。如果你是墨守成规的人，那就点上面的稳定版下载。安装包下面有语言包。  </p>
+<center>
+    <p><img src="/images/Android/Develop/SetUp/Git/07.webp" align="center"></p>
+</center>
+
+<p>　　稳定版。</p>
+<center>
+    <p><img src="/images/Android/Develop/SetUp/Git/07-1.webp" align="center"></p>
+</center>
+
+<p>　　我选下面的预览版。  </p>
+<center>
+    <p><img src="/images/Android/Develop/SetUp/Git/07-2.webp" align="center"></p>
+</center>
+
+<p>　　先安装安装包，再安装语言包，一路默认即可。在开始菜单里面找到 TortoiseGit 文件夹，打开 Settings，在这里更改语言。  </p>
+<center>
+    <p><img src="/images/Android/Develop/SetUp/Git/08.webp" align="center"></p>
+</center>
+
+<h1 id="在Android-Studio配置Git"><a href="#在Android-Studio配置Git" class="headerlink" title="在Android Studio配置Git"></a>在Android Studio配置Git</h1><p>　　在 Android Studio 设置里打开 Git，在里面设置 Git 的路径。  </p>
+<center>
+    <p><img src="/images/Android/Develop/SetUp/Git/09.webp" align="center"></p>
+</center>
+
+<p>　　然后点击 Test，弹出 Git 版本则说明 Git 配置成功。  </p>
+<center>
+    <p><img src="/images/Android/Develop/SetUp/Git/10.webp" align="center"></p>
+</center>
+
+<h1 id="在Android-Studio使用Git"><a href="#在Android-Studio使用Git" class="headerlink" title="在Android Studio使用Git"></a>在Android Studio使用Git</h1><p>　　菜单=&gt;VCS。  </p>
+<center>
+    <p><img src="/images/Android/Develop/SetUp/Git/11.webp" align="center"></p>
+</center>
+
+<center>
+    <p><img src="/images/Android/Develop/SetUp/Git/12.webp" align="center"></p>
+</center>
+
+<h2 id="推荐阅读"><a href="#推荐阅读" class="headerlink" title="推荐阅读"></a>推荐阅读</h2><ul>
+<li><a href="../09/Android-Develop-SetUp-Java.html">搭建Android开发环境01——Java</a>  </li>
+<li><a href="../12/Android-Develop-SetUp-SDK.html">搭建Android开发环境02——Android SDK</a>  </li>
+<li><a href="../21/Android-Develop-SetUp-Studio.html">搭建Android开发环境03——Android Studio</a>  </li>
+<li><a href="../24/Android-Develop-SetUp-StudioOptimize.html">搭建Android开发环境03.1——Android Studio的优化</a>  </li>
+<li><a href="../27/Android-Develop-SetUp-HelloWorld.html">搭建Android开发环境03.2——Hello World</a>  </li>
+</ul>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div>如果你喜欢我的博客，那就请我吃冰淇淋吧（づ￣3￣）づ╭❤～</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.png" alt="LJason 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="LJason 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>LJason
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://ljason.cn/Android-Develop-SetUp-Git/" title="搭建Android开发环境04——Git">https://ljason.cn/Android-Develop-SetUp-Git/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+        
+
+  <div class="followme">
+    <p>欢迎关注我的其它发布渠道</p>
+
+    <div class="social-list">
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="https://twitter.com/LJason77">
+            <span class="icon">
+              <i class="fab fa-twitter"></i>
+            </span>
+
+            <span class="label">Twitter</span>
+          </a>
+        </div>
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="https://t.me/LJason">
+            <span class="icon">
+              <i class="fab fa-telegram"></i>
+            </span>
+
+            <span class="label">Telegram</span>
+          </a>
+        </div>
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+        </div>
+    </div>
+  </div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Android/" rel="tag"># Android</a>
+              <a href="/tags/%E6%90%AD%E5%BB%BA/" rel="tag"># 搭建</a>
+              <a href="/tags/%E7%8E%AF%E5%A2%83/" rel="tag"># 环境</a>
+              <a href="/tags/%E6%95%99%E7%A8%8B/" rel="tag"># 教程</a>
+              <a href="/tags/Git/" rel="tag"># Git</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Android-Develop-SetUp-HelloWorld/" rel="prev" title="搭建Android开发环境03.2——Hello World">
+      <i class="fa fa-chevron-left"></i> 搭建Android开发环境03.2——Hello World
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/Android-Develop-SetUp-Genymotion/" rel="next" title="搭建Android开发环境05——Genymotion">
+      搭建Android开发环境05——Genymotion <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#安装Git"><span class="nav-number">1.</span> <span class="nav-text">安装Git</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装TortoiseGit"><span class="nav-number">2.</span> <span class="nav-text">安装TortoiseGit</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#在Android-Studio配置Git"><span class="nav-number">3.</span> <span class="nav-text">在Android Studio配置Git</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#在Android-Studio使用Git"><span class="nav-number">4.</span> <span class="nav-text">在Android Studio使用Git</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#推荐阅读"><span class="nav-number">4.1.</span> <span class="nav-text">推荐阅读</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">LJason</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">43</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">51</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/LJason77" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LJason77" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:ljason@ljason.cn" title="E-Mail → mailto:ljason@ljason.cn"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/LJason77" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;LJason77" rel="noopener" target="_blank"><i class="fab fa-twitter fa-fw"></i>Twitter</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.youtube.com/channel/UCQkIv5pqfeCdBpvNwGgkGxg?view_as=subscriber" title="YouTube → https:&#x2F;&#x2F;www.youtube.com&#x2F;channel&#x2F;UCQkIv5pqfeCdBpvNwGgkGxg?view_as&#x3D;subscriber" rel="noopener" target="_blank"><i class="fab fa-youtube fa-fw"></i>YouTube</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.instagram.com/ljason77/" title="Instagram → https:&#x2F;&#x2F;www.instagram.com&#x2F;ljason77&#x2F;" rel="noopener" target="_blank"><i class="fab fa-instagram fa-fw"></i>Instagram</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">LJason</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/disqusjs@1/dist/disqusjs.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/disqusjs@1/dist/disqus.js', () => {
+    window.dsqjs = new DisqusJS({
+      api       : '' || 'https://disqus.com/api/',
+      apikey    : 'FwKuMa70aljw150V4NCz1NeCCiOaulpmRYKY2mT1ogMCX29oqVcdu9HFniPS8JrD',
+      shortname : '951203598',
+      url       : "https://ljason.cn/Android-Develop-SetUp-Git/",
+      identifier: "Android-Develop-SetUp-Git/",
+      title     : "搭建Android开发环境04——Git",
+    });
+  }, window.DisqusJS);
+});
+</script>
+
+</body>
+</html>

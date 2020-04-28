@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="005SuinPhVVcjIK7c7flsNVdrDPrmLYPfUJQgH27uOI">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"ljason.cn","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="博客（英语：Blog，为Web Log的混成词），指 log on the web，即在网络上纪录，是一种由个人管理、张贴新的文章、图片或影片的网站或在线日记，用来纪录、抒发情感或分享信息。博客上的文章通常根据张贴时间（Chronological Order），以倒序方式由新到旧排列。——来自 自由的百科全书">
+<meta property="og:type" content="article">
+<meta property="og:title" content="个人博客搭建1——Windows（已过时）">
+<meta property="og:url" content="https://ljason.cn/Blog-SetUp-One/">
+<meta property="og:site_name" content="野生程序猴子">
+<meta property="og:description" content="博客（英语：Blog，为Web Log的混成词），指 log on the web，即在网络上纪录，是一种由个人管理、张贴新的文章、图片或影片的网站或在线日记，用来纪录、抒发情感或分享信息。博客上的文章通常根据张贴时间（Chronological Order），以倒序方式由新到旧排列。——来自 自由的百科全书">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://ljason.cn/images/Blog/Windows/0.webp">
+<meta property="og:image" content="https://ljason.cn/images/Blog/Windows/1.webp">
+<meta property="og:image" content="https://ljason.cn/images/Blog/Windows/2.webp">
+<meta property="og:image" content="https://ljason.cn/images/Blog/Windows/3.webp">
+<meta property="article:published_time" content="2015-11-07T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-04-28T16:36:31.804Z">
+<meta property="article:author" content="LJason">
+<meta property="article:tag" content="教程">
+<meta property="article:tag" content="博客">
+<meta property="article:tag" content="Windows">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://ljason.cn/images/Blog/Windows/0.webp">
+
+<link rel="canonical" href="https://ljason.cn/Blog-SetUp-One/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>个人博客搭建1——Windows（已过时） | 野生程序猴子</title>
+  
+    <script>
+      function sendPageView() {
+        if (CONFIG.hostname !== location.hostname) return;
+        var uid = localStorage.getItem('uid') || (Math.random() + '.' + Math.random());
+        localStorage.setItem('uid', uid);
+        navigator.sendBeacon('https://www.google-analytics.com/collect', new URLSearchParams({
+          v  : 1,
+          tid: 'UA-71060796-2',
+          cid: uid,
+          t  : 'pageview',
+          dp : encodeURIComponent(location.pathname)
+        }));
+      }
+      document.addEventListener('pjax:complete', sendPageView);
+      sendPageView();
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="野生程序猴子" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">野生程序猴子</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://ljason.cn/Blog-SetUp-One/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="LJason">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="野生程序猴子">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          个人博客搭建1——Windows（已过时）
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2015-11-08 00:00:00" itemprop="dateCreated datePublished" datetime="2015-11-08T00:00:00+08:00">2015-11-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-04-29 00:36:31" itemprop="dateModified" datetime="2020-04-29T00:36:31+08:00">2020-04-29</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%8D%9A%E5%AE%A2/" itemprop="url" rel="index"><span itemprop="name">博客</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>　　博客（英语：Blog，为Web Log的混成词），指 log on the web，即在网络上纪录，是一种由个人管理、张贴新的文章、图片或影片的网站或在线日记，用来纪录、抒发情感或分享信息。博客上的文章通常根据张贴时间（Chronological Order），以倒序方式由新到旧排列。——来自 自由的百科全书  </p>
+<a id="more"></a>
+
+<p>　　阮一峰老师说过：喜欢写 Blog 的人，会经历三个阶段：  </p>
+<blockquote>
+<p>第一阶段，刚接触 Blog，觉得很新鲜，试着选择一个免费空间来写。<br>第二阶段，发现免费空间限制太多，就自己购买域名和空间，搭建独立博客。<br>第三阶段，觉得独立博客的管理太麻烦，最好在保留控制权的前提下，让别人来管，自己只负责写文章。  </p>
+</blockquote>
+<p>　　今天就来写写在github上的个人博客的搭建。  </p>
+<p>　　github 是一个利用 Git 进行版本控制、专门用于存放软件代码与内容的共享虚拟主机服务。  </p>
+<p>　　在 <a href="https://github.com/" target="_blank" rel="noopener">github</a> 上搭建 blog 。既拥有绝对管理权，又享受 github 带来的便利——不管何时何地，只要向主机提交 commit，就能发布新文章。更妙的是，这一切还是免费的，github 提供无限流量。  </p>
+<p>　　但是对于一个新手来说，看到一大堆源码，只会让人头晕脑涨，不知何处入手。他希望看到的是，一个简明易懂的网页，说明每一步应该怎么做。因此，github 就设计了 Pages 功能，允许用户自定义项目首页，用来替代默认的源码列表。所以，github Pages 可以被认为是用户编写的、托管在 github 上的静态网页。  </p>
+<p>　　github 提供模板，允许站内生成网页，但也允许用户自己编写网页，然后上传。有意思的是，这种上传并不是单纯的上传，而是会经过 Jekyll 程序的再处理。  </p>
+<h1 id="So-what-is-Jekyll-exactly"><a href="#So-what-is-Jekyll-exactly" class="headerlink" title="So what is Jekyll, exactly?"></a>So what is Jekyll, exactly?</h1><blockquote>
+<p>Jekyll is a simple, blog-aware, static site generator.  </p>
+</blockquote>
+<p>　　根据官方说法，<code>Jekyll</code> 是一个简单的静态博客站点生成器。  </p>
+<p>　　我们需要做的就是在本地写好博客，然后上传到服务器上。优点很明显：  </p>
+<ol>
+<li>免费、无限流量。  </li>
+<li>Revision control，你懂的。  </li>
+<li>单纯写文章即可，无需管理。  </li>
+</ol>
+<p>　　安装 jekyll 之前需要有一些环境：  </p>
+<ul>
+<li>Ruby  </li>
+<li>RubyGems  </li>
+<li>NodeJS</li>
+</ul>
+<p>　　安装好这些之后，</p>
+<h1 id="安装-Ruby"><a href="#安装-Ruby" class="headerlink" title="安装 Ruby"></a>安装 Ruby</h1><p>　　Ruby 在不同平台有不同的安装方式，本教程针对 Windows 用 Ruby 的安装器来安装。  </p>
+<p>　　前往<a href="http://rubyinstaller.org/downloads/" target="_blank" rel="noopener">官网</a>根据自己系统位数下载最新版。  </p>
+<center>
+    <p><img src="/images/Blog/Windows/0.webp" align="center"></p>
+</center>
+
+<p>　　下载完安装，默认英文。同意协议之后来到这里，勾选 <strong><code>Add Ruby executables to your PATH</code></strong>，安装器会自动添加环境变量。不建议修改安装路径，如果更改了路径，路径中间不要出现中文以及空格。  </p>
+<center>
+    <p><img src="/images/Blog/Windows/1.webp" align="center"></p>
+</center>
+
+<p>　　安装完成后打开命令行，输入：  </p>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">ruby -v</span></span><br></pre></td></tr></table></figure>
+
+<p>　　如果输出当前安装的版本，即表示 Ruby 安装成功。  </p>
+<h2 id="安装-DevKit"><a href="#安装-DevKit" class="headerlink" title="安装 DevKit"></a>安装 DevKit</h2><p>　　DevKit 是一个在 Windows 上帮助简化安装及使用 Ruby C/C++ 扩展如 RDiscount 和 RedCloth 的工具箱。  </p>
+<p>　　还是前往<a href="http://rubyinstaller.org/downloads/" target="_blank" rel="noopener">官网</a>根据自己系统位数下载最新版。  </p>
+<center>
+    <p><img src="/images/Blog/Windows/2.webp" align="center"></p>
+</center>
+
+<p>　　下载完双击，解压到非中文无空格的路径中。  </p>
+<center>
+    <p><img src="/images/Blog/Windows/3.webp" align="center"></p>
+</center>
+
+<p>　　新建命令行窗口，cd 到路径中，依次输入：  </p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">ruby</span> <span class="selector-tag">dk</span><span class="selector-class">.rb</span> <span class="selector-tag">init</span></span><br><span class="line"><span class="selector-tag">notepad</span> <span class="selector-tag">config</span><span class="selector-class">.yml</span></span><br></pre></td></tr></table></figure>
+
+<p>　　在打开的记事本中，末尾的斜杠改成相反的（如 <code>/</code> 改成 <code>\</code>），保存文件并退出。  </p>
+<h2 id="安装-Jekyll"><a href="#安装-Jekyll" class="headerlink" title="安装 Jekyll"></a>安装 Jekyll</h2><p>　　经过上面安装，gem 已经正确安装。新建命令行窗口，输入：  </p>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">gem -v</span></span><br></pre></td></tr></table></figure>
+
+<p>　　如果能够输出 gem 的版本，即说明 gem 确实安装成功了。  </p>
+<p>　　新建命令行窗口，输入：  </p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gem <span class="keyword">install</span> jekyll</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>All of Jekyll’s gem dependencies are automatically installed by the above command, so you won’t have to worry about them at all.  </p>
+</blockquote>
+<p>　　根据官方文档，所有的 Jekyll 的 gem 依赖包都会被自动安装。等待一下即可完成安装（在天朝会比较慢）。如果中途弹出网络权限，允许即可。安装完成可新建命令行窗口输入以下命令来验证是否安装成功：  </p>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">jekyll -v</span></span><br></pre></td></tr></table></figure>
+
+<p>　　如果输出 jekyll 的版本，即说明安装成功。  </p>
+<h1 id="使用jekyll"><a href="#使用jekyll" class="headerlink" title="使用jekyll"></a>使用jekyll</h1><p>　　Now that you’ve got everything installed, let’s get to work!  </p>
+<p>　　现在新建命令行窗口，cd 到要新建博客的路径，输入如下命令：  </p>
+<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jekyll <span class="keyword">new</span> myblog</span><br></pre></td></tr></table></figure>
+
+<p>　　名为 myblog 的博客即可自动生成。继续输入：  </p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">cd</span> <span class="string">myblog</span></span><br><span class="line"><span class="attr">jekyll</span> <span class="string">serve</span></span><br></pre></td></tr></table></figure>
+
+<p>　　现在在浏览器中输入 <code>http://localhost:4000</code> 即可浏览新建的博客。  </p>
+<p>　　在 myblog 文件夹中的 _posts 文件夹中依据现有的博客格式添加用 markdown 写的文章即可完成添加博客。  </p>
+<p>　　至此 Windows 端的博客搭建已完成了。  </p>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div>如果你喜欢我的博客，那就请我吃冰淇淋吧（づ￣3￣）づ╭❤～</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.png" alt="LJason 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="LJason 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>LJason
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://ljason.cn/Blog-SetUp-One/" title="个人博客搭建1——Windows（已过时）">https://ljason.cn/Blog-SetUp-One/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+        
+
+  <div class="followme">
+    <p>欢迎关注我的其它发布渠道</p>
+
+    <div class="social-list">
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="https://twitter.com/LJason77">
+            <span class="icon">
+              <i class="fab fa-twitter"></i>
+            </span>
+
+            <span class="label">Twitter</span>
+          </a>
+        </div>
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="https://t.me/LJason">
+            <span class="icon">
+              <i class="fab fa-telegram"></i>
+            </span>
+
+            <span class="label">Telegram</span>
+          </a>
+        </div>
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+        </div>
+    </div>
+  </div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%95%99%E7%A8%8B/" rel="tag"># 教程</a>
+              <a href="/tags/%E5%8D%9A%E5%AE%A2/" rel="tag"># 博客</a>
+              <a href="/tags/Windows/" rel="tag"># Windows</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Android-Develop-Base-SDK/" rel="prev" title="Android开发基础01——Android SDK">
+      <i class="fa fa-chevron-left"></i> Android开发基础01——Android SDK
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/RaspberryPi-One/" rel="next" title="玩转树莓派01——初始化">
+      玩转树莓派01——初始化 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#So-what-is-Jekyll-exactly"><span class="nav-number">1.</span> <span class="nav-text">So what is Jekyll, exactly?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装-Ruby"><span class="nav-number">2.</span> <span class="nav-text">安装 Ruby</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装-DevKit"><span class="nav-number">2.1.</span> <span class="nav-text">安装 DevKit</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装-Jekyll"><span class="nav-number">2.2.</span> <span class="nav-text">安装 Jekyll</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用jekyll"><span class="nav-number">3.</span> <span class="nav-text">使用jekyll</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">LJason</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">43</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">51</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/LJason77" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LJason77" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:ljason@ljason.cn" title="E-Mail → mailto:ljason@ljason.cn"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/LJason77" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;LJason77" rel="noopener" target="_blank"><i class="fab fa-twitter fa-fw"></i>Twitter</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.youtube.com/channel/UCQkIv5pqfeCdBpvNwGgkGxg?view_as=subscriber" title="YouTube → https:&#x2F;&#x2F;www.youtube.com&#x2F;channel&#x2F;UCQkIv5pqfeCdBpvNwGgkGxg?view_as&#x3D;subscriber" rel="noopener" target="_blank"><i class="fab fa-youtube fa-fw"></i>YouTube</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.instagram.com/ljason77/" title="Instagram → https:&#x2F;&#x2F;www.instagram.com&#x2F;ljason77&#x2F;" rel="noopener" target="_blank"><i class="fab fa-instagram fa-fw"></i>Instagram</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">LJason</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/disqusjs@1/dist/disqusjs.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/disqusjs@1/dist/disqus.js', () => {
+    window.dsqjs = new DisqusJS({
+      api       : '' || 'https://disqus.com/api/',
+      apikey    : 'FwKuMa70aljw150V4NCz1NeCCiOaulpmRYKY2mT1ogMCX29oqVcdu9HFniPS8JrD',
+      shortname : '951203598',
+      url       : "https://ljason.cn/Blog-SetUp-One/",
+      identifier: "Blog-SetUp-One/",
+      title     : "个人博客搭建1——Windows（已过时）",
+    });
+  }, window.DisqusJS);
+});
+</script>
+
+</body>
+</html>

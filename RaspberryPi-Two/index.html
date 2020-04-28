@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="005SuinPhVVcjIK7c7flsNVdrDPrmLYPfUJQgH27uOI">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"ljason.cn","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="关于 Aria2 请自行 Google，这里只讲使用。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="玩转树莓派02——搭建下载机">
+<meta property="og:url" content="https://ljason.cn/RaspberryPi-Two/">
+<meta property="og:site_name" content="野生程序猴子">
+<meta property="og:description" content="关于 Aria2 请自行 Google，这里只讲使用。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2016-04-09T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-04-28T16:36:31.636Z">
+<meta property="article:author" content="LJason">
+<meta property="article:tag" content="树莓派">
+<meta property="article:tag" content="RaspberryPi">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://ljason.cn/RaspberryPi-Two/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>玩转树莓派02——搭建下载机 | 野生程序猴子</title>
+  
+    <script>
+      function sendPageView() {
+        if (CONFIG.hostname !== location.hostname) return;
+        var uid = localStorage.getItem('uid') || (Math.random() + '.' + Math.random());
+        localStorage.setItem('uid', uid);
+        navigator.sendBeacon('https://www.google-analytics.com/collect', new URLSearchParams({
+          v  : 1,
+          tid: 'UA-71060796-2',
+          cid: uid,
+          t  : 'pageview',
+          dp : encodeURIComponent(location.pathname)
+        }));
+      }
+      document.addEventListener('pjax:complete', sendPageView);
+      sendPageView();
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="野生程序猴子" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">野生程序猴子</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://ljason.cn/RaspberryPi-Two/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="LJason">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="野生程序猴子">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          玩转树莓派02——搭建下载机
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2016-04-10 00:00:00" itemprop="dateCreated datePublished" datetime="2016-04-10T00:00:00+08:00">2016-04-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-04-29 00:36:31" itemprop="dateModified" datetime="2020-04-29T00:36:31+08:00">2020-04-29</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%A0%91%E8%8E%93%E6%B4%BE/" itemprop="url" rel="index"><span itemprop="name">树莓派</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>　　关于 Aria2 请自行 Google，这里只讲使用。</p>
+<a id="more"></a>
+
+<h1 id="更新"><a href="#更新" class="headerlink" title="更新"></a>更新</h1><p>　　使用 Docker 安装 Aria2：</p>
+<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git clone https:<span class="string">//github.com/LJason77/docker-aria2-with-webui.git</span></span><br><span class="line"><span class="keyword">cd</span> docker-aria2-with-webui/</span><br><span class="line">docker build -t aria2 .</span><br><span class="line">docker run -d <span class="params">--name</span> aria2 <span class="params">--restart</span> always <span class="params">--network</span> host -v <span class="string">/mnt/downloads</span>:<span class="string">/data</span> aria2</span><br></pre></td></tr></table></figure>
+
+<p>　　具体用法可以查看项目：<a href="https://github.com/LJason77/docker-aria2-with-webui" target="_blank" rel="noopener">docker-aria2-with-webui</a></p>
+<h1 id="旧日博客"><a href="#旧日博客" class="headerlink" title="旧日博客"></a>旧日博客</h1><h2 id="安装-Aria"><a href="#安装-Aria" class="headerlink" title="安装 Aria"></a>安装 Aria</h2><p>　　由于仓库里的 aria2 版本太过于旧，所以我这里手动编译安装：  </p>
+<p>　　首先获取源码：  </p>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="keyword">clone</span> <span class="title">https</span>://github.com/aria2/aria2.git</span><br></pre></td></tr></table></figure>
+
+<p>　　然后安装相关的依赖：  </p>
+<figure class="highlight q"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-<span class="built_in">get</span> install -y libgnutls-deb0<span class="number">-28</span> nettle-<span class="built_in">dev</span> libgmp-<span class="built_in">dev</span> libssh2<span class="number">-1</span>-<span class="built_in">dev</span> libc-ares-<span class="built_in">dev</span> libxml2-<span class="built_in">dev</span> zlib1g-<span class="built_in">dev</span> libsqlite3-<span class="built_in">dev</span> pkg-config libgpg-error-<span class="built_in">dev</span> libgcrypt20-<span class="built_in">dev</span> libssl-<span class="built_in">dev</span> libexpat1-<span class="built_in">dev</span> libcppunit-<span class="built_in">dev</span> autoconf automake autotools-<span class="built_in">dev</span> autopoint libtool</span><br></pre></td></tr></table></figure>
+
+<p>　　生成构建程序所需的配置脚本和其他文件：  </p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">auto</span>reconf -i</span><br></pre></td></tr></table></figure>
+
+<p>　　然后开始配置 aria2：  </p>
+<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">./configure</span></span><br></pre></td></tr></table></figure>
+
+<p>　　配置完成后，开始编译 aria2：</p>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">make</span></span><br></pre></td></tr></table></figure>
+
+<p>　　编译完成之后，可执行文件位于 <code>src/aria2c</code>，然后运行单元测试：  </p>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">make check</span></span><br></pre></td></tr></table></figure>
+
+<p>　　结束之后就可以安装了：  </p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make <span class="keyword">install</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="配置-aria2"><a href="#配置-aria2" class="headerlink" title="配置 aria2"></a>配置 aria2</h2><p>　　创建 Aria2 的配置文件夹：  </p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> /etc/aria2</span><br></pre></td></tr></table></figure>
+
+<p>　　创建 session 和配置文件：  </p>
+<figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">touch <span class="meta-keyword">/etc/</span>aria2/aria2.session</span><br><span class="line">touch <span class="meta-keyword">/etc/</span>aria2/aria2.conf</span><br></pre></td></tr></table></figure>
+
+<p>　　编辑 <code>/etc/aria2/aria2.conf</code>：</p>
+<figure class="highlight vala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">## 文件保存相关 ##</span></span><br><span class="line"></span><br><span class="line"><span class="meta"># 文件保存目录</span></span><br><span class="line">dir=/mnt/storage/download</span><br><span class="line"><span class="meta"># 启用磁盘缓存, 0为禁用缓存, 需1.16以上版本, 默认:16M</span></span><br><span class="line">disk-cache=<span class="number">32</span>M</span><br><span class="line"><span class="meta"># 断点续传</span></span><br><span class="line">continue=<span class="literal">true</span></span><br><span class="line"></span><br><span class="line"><span class="meta"># 文件预分配方式, 能有效降低磁盘碎片, 默认:prealloc</span></span><br><span class="line"><span class="meta"># 预分配所需时间: none &lt; falloc ? trunc &lt; prealloc</span></span><br><span class="line"><span class="meta"># falloc和trunc则需要文件系统和内核支持</span></span><br><span class="line"><span class="meta"># NTFS建议使用falloc, EXT3/4建议trunc, MAC 下需要注释此项</span></span><br><span class="line"><span class="meta">#file-allocation=falloc</span></span><br><span class="line"></span><br><span class="line"><span class="meta">## 下载连接相关 ##</span></span><br><span class="line"></span><br><span class="line"><span class="meta"># 最大同时下载任务数, 运行时可修改, 默认:5</span></span><br><span class="line"><span class="meta">#max-concurrent-downloads=5</span></span><br><span class="line"><span class="meta"># 同一服务器连接数, 添加时可指定, 默认:1</span></span><br><span class="line">max-connection-per-server=<span class="number">15</span></span><br><span class="line"><span class="meta"># 整体下载速度限制, 运行时可修改, 默认:0（不限制）</span></span><br><span class="line"><span class="meta">#max-overall-download-limit=0</span></span><br><span class="line"><span class="meta"># 单个任务下载速度限制, 默认:0（不限制）</span></span><br><span class="line"><span class="meta">#max-download-limit=0</span></span><br><span class="line"><span class="meta"># 整体上传速度限制, 运行时可修改, 默认:0（不限制）</span></span><br><span class="line"><span class="meta">#max-overall-upload-limit=0</span></span><br><span class="line"><span class="meta"># 单个任务上传速度限制, 默认:0（不限制）</span></span><br><span class="line"><span class="meta">#max-upload-limit=0</span></span><br><span class="line"><span class="meta"># 禁用IPv6, 默认:false</span></span><br><span class="line">disable-ipv6=<span class="literal">true</span></span><br><span class="line"></span><br><span class="line"><span class="meta"># 最小文件分片大小, 添加时可指定, 取值范围1M -1024M, 默认:20M</span></span><br><span class="line"><span class="meta"># 假定size=10M, 文件为20MiB 则使用两个来源下载; 文件为15MiB 则使用一个来源下载</span></span><br><span class="line">min-split-size=<span class="number">10</span>M</span><br><span class="line"><span class="meta"># 单个任务最大线程数, 添加时可指定, 默认:5</span></span><br><span class="line">split=<span class="number">10</span></span><br><span class="line"></span><br><span class="line"><span class="meta">## 进度保存相关 ##</span></span><br><span class="line"></span><br><span class="line"><span class="meta"># 从会话文件中读取下载任务</span></span><br><span class="line">input-file=/etc/aria2/aria2.session</span><br><span class="line"><span class="meta"># 在Aria2退出时保存错误的、未完成的下载任务到会话文件</span></span><br><span class="line">save-session=/etc/aria2/aria2.session</span><br><span class="line"><span class="meta"># 定时保存会话, 0为退出时才保存, 需1.16.1以上版本, 默认:0</span></span><br><span class="line">save-session-interval=<span class="number">60</span></span><br><span class="line"></span><br><span class="line"><span class="meta">## RPC相关设置 ##</span></span><br><span class="line"></span><br><span class="line"><span class="meta"># 启用RPC, 默认:false</span></span><br><span class="line">enable-rpc=<span class="literal">true</span></span><br><span class="line"><span class="meta"># 允许所有来源, 默认:false</span></span><br><span class="line">rpc-allow-origin-all=<span class="literal">true</span></span><br><span class="line"><span class="meta"># 允许外部访问, 默认:false</span></span><br><span class="line">rpc-listen-all=<span class="literal">true</span></span><br><span class="line"><span class="meta"># RPC端口, 仅当默认端口被占用时修改</span></span><br><span class="line"><span class="meta"># rpc-listen-port=6800</span></span><br><span class="line"><span class="meta"># 设置的RPC授权令牌, v1.18.4新增功能, 取代 --rpc-user 和 --rpc-passwd 选项</span></span><br><span class="line"><span class="meta">#rpc-secret=&lt;TOKEN&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="meta">## BT/PT下载相关 ##</span></span><br><span class="line"></span><br><span class="line"><span class="meta"># 当下载的是一个种子(以.torrent结尾)时, 自动开始BT任务, 默认:true</span></span><br><span class="line"><span class="meta">#follow-torrent=true</span></span><br><span class="line"><span class="meta"># 客户端伪装, PT需要</span></span><br><span class="line">peer-id-prefix=-TR2770-</span><br><span class="line">user-agent=Transmission/<span class="number">2.77</span></span><br><span class="line"><span class="meta"># 强制保存会话, 即使任务已经完成, 默认:false</span></span><br><span class="line"><span class="meta"># 较新的版本开启后会在任务完成后依然保留.aria2文件</span></span><br><span class="line"><span class="meta">#force-save=false</span></span><br><span class="line"><span class="meta"># 继续之前的BT任务时, 无需再次校验, 默认:false</span></span><br><span class="line">bt-seed-unverified=<span class="literal">true</span></span><br><span class="line"><span class="meta"># 保存磁力链接元数据为种子文件(.torrent文件), 默认:false</span></span><br><span class="line">bt-save-metadata=<span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<p>　　然后执行：  </p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">aria2c <span class="attribute">--conf-path</span>=/etc/aria2/aria2.conf -D</span><br></pre></td></tr></table></figure>
+
+<p>　　没有任何提示则表示成功。接下来添加开机自启：  </p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">touch <span class="regexp">/etc/i</span>nit.d<span class="regexp">/aria2c</span></span><br></pre></td></tr></table></figure>
+
+<p>　　添加：  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/sh</span></span><br><span class="line"><span class="comment">### BEGIN INIT INFO</span></span><br><span class="line"><span class="comment"># Provides: aria2c</span></span><br><span class="line"><span class="comment"># Required-Start:    $network $local_fs $remote_fs</span></span><br><span class="line"><span class="comment"># Required-Stop:     $network $local_fs $remote_fs</span></span><br><span class="line"><span class="comment"># Default-Start:     2 3 4 5</span></span><br><span class="line"><span class="comment"># Default-Stop:      0 1 6</span></span><br><span class="line"><span class="comment"># Short-Description: aria2c RPC init script.</span></span><br><span class="line"><span class="comment"># Description: Starts and stops aria2 RPC services.</span></span><br><span class="line"><span class="comment">### END INIT INFO</span></span><br><span class="line"></span><br><span class="line">USER=root</span><br><span class="line">RETVAL=0</span><br><span class="line"></span><br><span class="line"><span class="keyword">case</span> <span class="string">"<span class="variable">$1</span>"</span> <span class="keyword">in</span>  </span><br><span class="line">    start)  </span><br><span class="line">        <span class="built_in">echo</span> <span class="string">"Starting service Aria2..."</span></span><br><span class="line">        aria2c --conf-path=/etc/aria2/aria2.conf -D  </span><br><span class="line">        <span class="built_in">echo</span> <span class="string">"Start service done."</span>  </span><br><span class="line">    ;;  </span><br><span class="line">    stop)  </span><br><span class="line">        <span class="built_in">echo</span> <span class="string">"Stoping service Aria2..."</span>  </span><br><span class="line">        killall aria2c   </span><br><span class="line">        <span class="built_in">echo</span> <span class="string">"Stop service done."</span>  </span><br><span class="line">    ;;  </span><br><span class="line"><span class="keyword">esac</span>  </span><br><span class="line"></span><br><span class="line"><span class="built_in">exit</span> <span class="variable">$RETVAL</span></span><br></pre></td></tr></table></figure>
+
+<p>　　执行：  </p>
+<figure class="highlight llvm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">chmod +<span class="keyword">x</span> /etc/init.d/aria<span class="number">2</span><span class="keyword">c</span></span><br><span class="line">apt-get -y install chkconfig</span><br><span class="line">chkconfig --<span class="keyword">add</span> aria<span class="number">2</span><span class="keyword">c</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="安装-nginx"><a href="#安装-nginx" class="headerlink" title="安装 nginx"></a>安装 nginx</h2><p>　　Nginx 是一个非常轻量级的HTTP服务器，非常适合放在树莓派上作为 Aria2 的 Web 管理。安装 Nginx：  </p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-<span class="builtin-name">get</span> -y install nginx</span><br></pre></td></tr></table></figure>
+
+<p>　　下载第三方的程序：　　</p>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">rm -rf /var/www/html</span><br><span class="line">git <span class="keyword">clone</span> <span class="title">https</span>://github.com/ziahamza/webui-aria2.git /var/www/html</span><br></pre></td></tr></table></figure>
+
+<p>　　启动 nginx：  </p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="regexp">/etc/i</span>nit.d<span class="regexp">/nginx start</span></span><br></pre></td></tr></table></figure>
+
+<p>　　添加开机自启，编辑 <code>/etc/rc.local</code>，添加一行：  </p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="regexp">/etc/i</span>nit.d<span class="regexp">/nginx start</span></span><br></pre></td></tr></table></figure>
+
+<p>　　在浏览器中输入树莓派的IP即可使用 Aria2 下载了。  </p>
+<p>　　现在只要把链接、种子在上学前、上班前、睡觉前扔进去，回来就下载好了。如果下载大家伙，完全不像以前要挂机一整天。想想看，电脑功率多大，根据 <a href="https://en.wikipedia.org/wiki/Raspberry_Pi" target="_blank" rel="noopener" title="Wikipedia">RaspberryPi</a>，三代的树莓派额定功率才4.0W，超省电。  </p>
+<h2 id="用直链下载百毒云资源（已失效）"><a href="#用直链下载百毒云资源（已失效）" class="headerlink" title="用直链下载百毒云资源（已失效）"></a><del>用直链下载百毒云资源</del>（已失效）</h2><p>　　万恶的百毒云不交钱就限速下载真是受够了，本来想申请 PCS 来获得 API 端口用来不限速下载。可惜人家早已看穿你的小心思，百毒早在13年就关闭的 PCS 的注册，但老用户则不受影响（关闭公告上原因说了一大堆，其实就是大家都拿来做不限速，百毒没法捞钱而已）。但是天无绝人之路，就因为老用户不受影响，所以我辗转终于找到了一个 PCS 。  </p>
+<p>　　<a href="http://bdbea3.duapp.com/baidu_pcs/" target="_blank" rel="noopener">百度网盘直链系统</a>  </p>
+<p>　　进去登陆百度云，之后在 云盘-我的应用数据-hgf_blog 中放入文件，页面中就会出现列表，点击文件即可获得直链，然后用 Aria2 下载即可。  </p>
+<h2 id="用-Tampermonkey-下载百度云资源"><a href="#用-Tampermonkey-下载百度云资源" class="headerlink" title="用 Tampermonkey 下载百度云资源"></a>用 Tampermonkey 下载百度云资源</h2><p>　　首先在 chrome 浏览器安装 <a href="https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo" target="_blank" rel="noopener">Tampermonkey</a> 插件，然后再安装 <a href="https://greasyfork.org/zh-CN/scripts/23635-%E7%99%BE%E5%BA%A6%E7%BD%91%E7%9B%98%E7%9B%B4%E6%8E%A5%E4%B8%8B%E8%BD%BD%E5%8A%A9%E6%89%8B" target="_blank" rel="noopener">百度网盘直接下载助手</a>，这样就可以了，教程可以参照里面的说明。  </p>
+<p>　　打开 <a href="http://pan.baidu.com/disk/home" target="_blank" rel="noopener">百度云</a>，选中一个文件，将会出现一个 <code>下载助手</code>，选择 <code>外链下载</code>-<code>显示链接</code>-<code>编辑</code>-<code>单行</code>，再全选复制链接，粘贴到 aria2 里面下载即可。</p>
+<p>　　注意：文件名是中文的，在 aria2 里面下载会乱码，可以在百度云里重命名或者在链接后面加上 <strong>–out=文件名</strong>，具体在 Aria2 下载的界面都有说明。</p>
+<h1 id="定时限速"><a href="#定时限速" class="headerlink" title="定时限速"></a>定时限速</h1><p>　　我白天在学校，晚上才回家。为了不影响上网，所以我就想白天全速下载，晚上定时限速。编辑 <code>/var/spool/cron/crontabs/root</code>，添加：  </p>
+<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">0 19 * * * curl http:<span class="string">//127.0.0.1</span><span class="function">:6800</span>/jsonrpc -H <span class="string">"Content-Type: application/json"</span> -H <span class="string">"Accept: application/json"</span> <span class="params">--data</span> '&#123;<span class="string">"jsonrpc"</span>:<span class="string">"2.0"</span>,<span class="string">"id"</span><span class="function">:1</span>,<span class="string">"method"</span>:<span class="string">"aria2.changeGlobalOption"</span>,<span class="string">"params"</span>:[&#123;<span class="string">"max-overall-download-limit"</span>:<span class="string">"300K"</span>,<span class="string">"max-overall-upload-limit"</span>:<span class="string">"10K"</span>&#125;]&#125;'</span><br><span class="line">30 23 * * * curl http:<span class="string">//127.0.0.1</span><span class="function">:6800</span>/jsonrpc -H <span class="string">"Content-Type: application/json"</span> -H <span class="string">"Accept: application/json"</span> <span class="params">--data</span> '&#123;<span class="string">"jsonrpc"</span>:<span class="string">"2.0"</span>,<span class="string">"id"</span><span class="function">:1</span>,<span class="string">"method"</span>:<span class="string">"aria2.changeGlobalOption"</span>,<span class="string">"params"</span>:[&#123;<span class="string">"max-overall-download-limit"</span>:<span class="string">"0"</span>,<span class="string">"max-overall-upload-limit"</span>:<span class="string">"0"</span>&#125;]&#125;'</span><br></pre></td></tr></table></figure>
+
+<p>　　第一行表示在 19:00 的时候开始限制下载速度为300K，上传限速为10K；第二行表示在 23:30 的时候开始，下载和上传速度均为0（0为不限速）。  </p>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div>如果你喜欢我的博客，那就请我吃冰淇淋吧（づ￣3￣）づ╭❤～</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.png" alt="LJason 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="LJason 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>LJason
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://ljason.cn/RaspberryPi-Two/" title="玩转树莓派02——搭建下载机">https://ljason.cn/RaspberryPi-Two/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+        
+
+  <div class="followme">
+    <p>欢迎关注我的其它发布渠道</p>
+
+    <div class="social-list">
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="https://twitter.com/LJason77">
+            <span class="icon">
+              <i class="fab fa-twitter"></i>
+            </span>
+
+            <span class="label">Twitter</span>
+          </a>
+        </div>
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="https://t.me/LJason">
+            <span class="icon">
+              <i class="fab fa-telegram"></i>
+            </span>
+
+            <span class="label">Telegram</span>
+          </a>
+        </div>
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+        </div>
+    </div>
+  </div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%A0%91%E8%8E%93%E6%B4%BE/" rel="tag"># 树莓派</a>
+              <a href="/tags/RaspberryPi/" rel="tag"># RaspberryPi</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/RaspberryPi-One/" rel="prev" title="玩转树莓派01——初始化">
+      <i class="fa fa-chevron-left"></i> 玩转树莓派01——初始化
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/RaspberryPi-Three/" rel="next" title="玩转树莓派03——打造网络附加存储">
+      玩转树莓派03——打造网络附加存储 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#更新"><span class="nav-number">1.</span> <span class="nav-text">更新</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#旧日博客"><span class="nav-number">2.</span> <span class="nav-text">旧日博客</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装-Aria"><span class="nav-number">2.1.</span> <span class="nav-text">安装 Aria</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置-aria2"><span class="nav-number">2.2.</span> <span class="nav-text">配置 aria2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装-nginx"><span class="nav-number">2.3.</span> <span class="nav-text">安装 nginx</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用直链下载百毒云资源（已失效）"><span class="nav-number">2.4.</span> <span class="nav-text">用直链下载百毒云资源（已失效）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用-Tampermonkey-下载百度云资源"><span class="nav-number">2.5.</span> <span class="nav-text">用 Tampermonkey 下载百度云资源</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#定时限速"><span class="nav-number">3.</span> <span class="nav-text">定时限速</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">LJason</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">43</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">51</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/LJason77" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LJason77" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:ljason@ljason.cn" title="E-Mail → mailto:ljason@ljason.cn"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/LJason77" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;LJason77" rel="noopener" target="_blank"><i class="fab fa-twitter fa-fw"></i>Twitter</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.youtube.com/channel/UCQkIv5pqfeCdBpvNwGgkGxg?view_as=subscriber" title="YouTube → https:&#x2F;&#x2F;www.youtube.com&#x2F;channel&#x2F;UCQkIv5pqfeCdBpvNwGgkGxg?view_as&#x3D;subscriber" rel="noopener" target="_blank"><i class="fab fa-youtube fa-fw"></i>YouTube</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.instagram.com/ljason77/" title="Instagram → https:&#x2F;&#x2F;www.instagram.com&#x2F;ljason77&#x2F;" rel="noopener" target="_blank"><i class="fab fa-instagram fa-fw"></i>Instagram</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">LJason</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/disqusjs@1/dist/disqusjs.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/disqusjs@1/dist/disqus.js', () => {
+    window.dsqjs = new DisqusJS({
+      api       : '' || 'https://disqus.com/api/',
+      apikey    : 'FwKuMa70aljw150V4NCz1NeCCiOaulpmRYKY2mT1ogMCX29oqVcdu9HFniPS8JrD',
+      shortname : '951203598',
+      url       : "https://ljason.cn/RaspberryPi-Two/",
+      identifier: "RaspberryPi-Two/",
+      title     : "玩转树莓派02——搭建下载机",
+    });
+  }, window.DisqusJS);
+});
+</script>
+
+</body>
+</html>

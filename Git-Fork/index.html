@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="005SuinPhVVcjIK7c7flsNVdrDPrmLYPfUJQgH27uOI">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"ljason.cn","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="在以前，fork 是一个贬义词，指的是某个人使开源项目向不同的方向发展，或者创建一个竞争项目，使得原项目的贡献者分裂。在 GitHub，fork 指的是在你自己空间中创建的项目副本，这个副本允许你以一种更开放的方式对其进行修改。——《Pro Git》">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Git——为开源项目做贡献">
+<meta property="og:url" content="https://ljason.cn/Git-Fork/">
+<meta property="og:site_name" content="野生程序猴子">
+<meta property="og:description" content="在以前，fork 是一个贬义词，指的是某个人使开源项目向不同的方向发展，或者创建一个竞争项目，使得原项目的贡献者分裂。在 GitHub，fork 指的是在你自己空间中创建的项目副本，这个副本允许你以一种更开放的方式对其进行修改。——《Pro Git》">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-04-27T19:08:43.000Z">
+<meta property="article:modified_time" content="2020-04-28T16:36:31.108Z">
+<meta property="article:author" content="LJason">
+<meta property="article:tag" content="Git">
+<meta property="article:tag" content="多人协作">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://ljason.cn/Git-Fork/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Git——为开源项目做贡献 | 野生程序猴子</title>
+  
+    <script>
+      function sendPageView() {
+        if (CONFIG.hostname !== location.hostname) return;
+        var uid = localStorage.getItem('uid') || (Math.random() + '.' + Math.random());
+        localStorage.setItem('uid', uid);
+        navigator.sendBeacon('https://www.google-analytics.com/collect', new URLSearchParams({
+          v  : 1,
+          tid: 'UA-71060796-2',
+          cid: uid,
+          t  : 'pageview',
+          dp : encodeURIComponent(location.pathname)
+        }));
+      }
+      document.addEventListener('pjax:complete', sendPageView);
+      sendPageView();
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="野生程序猴子" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">野生程序猴子</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://ljason.cn/Git-Fork/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="LJason">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="野生程序猴子">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Git——为开源项目做贡献
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-04-28 03:08:43" itemprop="dateCreated datePublished" datetime="2020-04-28T03:08:43+08:00">2020-04-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-04-29 00:36:31" itemprop="dateModified" datetime="2020-04-29T00:36:31+08:00">2020-04-29</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Git/" itemprop="url" rel="index"><span itemprop="name">Git</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <blockquote>
+<p>在以前，<em>fork</em> 是一个贬义词，指的是某个人使开源项目向不同的方向发展，或者创建一个竞争项目，使得原项目的贡献者分裂。<br>在 GitHub，<em>fork</em> 指的是在你自己空间中创建的项目副本，这个副本允许你以一种更开放的方式对其进行修改。<br>——《<a href="https://git-scm.com/book/en/v2" target="_blank" rel="noopener">Pro Git</a>》</p>
+</blockquote>
+<a id="more"></a>
+
+<p>无论是对开源项目做贡献，还是在自己团队的项目中进行多人协作开发，了解如何正确的 <strong>派生(Fork)</strong> 并且创建 <strong>拉取请求(Pull Request，简称 PR)</strong> 都是必不可少的。</p>
+<p>一个较为标准的流程为：</p>
+<ol>
+<li><strong>派生</strong> 一个项目</li>
+<li>从 master 分支创建一个新分支</li>
+<li>完成工作，提交 commit</li>
+<li>创建一个 <strong>拉取请求</strong></li>
+<li>讨论、根据实际情况改进代码</li>
+<li>项目管理者合并或关闭拉取请求</li>
+</ol>
+<p>现在我们来看看具体的流程有哪些。</p>
+<h1 id="派生一个项目"><a href="#派生一个项目" class="headerlink" title="派生一个项目"></a>派生一个项目</h1><p>无论是著名的 <a href="https://github.com/" target="_blank" rel="noopener">Github</a>，还是 <a href="https://gitlab.com/" target="_blank" rel="noopener">Gitlab</a>，项目主页面都是非常相似的。在项目主页面的右上角，找到 <strong>Fork</strong> 按钮点击一下，即可在你自己的空间中创建一个项目副本。这即是 <strong>派生</strong>。</p>
+<p>假设用户名是 <code>user</code>，项目名为 <code>project</code>。我们接下来将这个项目 <strong>克隆(clone)</strong> 到本地：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git <span class="built_in">clone</span> git@github.com:user/project.git</span><br><span class="line">$ <span class="built_in">cd</span> project</span><br></pre></td></tr></table></figure>
+
+<h1 id="保持项目为最新的状态"><a href="#保持项目为最新的状态" class="headerlink" title="保持项目为最新的状态"></a>保持项目为最新的状态</h1><p>如果你只是想在短期内为项目贡献，这是非必须的步骤。</p>
+<p>但如果你打算长期为项目作出贡献，或者你自己就是开发团队的一员，则此步必不可少。</p>
+<p>要保持项目为最新的状态，需要先添加一个上游仓库：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 添加一个名为 upstream 的上游仓库地址</span></span><br><span class="line">$ git remote add upstream https://github.com/&lt;原仓库所有者&gt;/project.git</span><br><span class="line"><span class="comment"># 查看当前的仓库地址列表</span></span><br><span class="line">$ git remote -v</span><br></pre></td></tr></table></figure>
+
+<p>现在我们已经添加了一个上游仓库的地址，接下来我们从上游仓库中 <strong>抓取(fetch)</strong> 最新的内容并 <strong>合并(merge)</strong> 进本地仓库：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 从上游仓库抓取最新内容</span></span><br><span class="line">$ git fetch upstream</span><br><span class="line"><span class="comment"># 将上游仓库的更新合并进本地</span></span><br><span class="line">$ git merge upstream/master</span><br></pre></td></tr></table></figure>
+
+<p>如果没有意外，现在本地仓库已经是最新的内容了。</p>
+<h1 id="从-master-分支创建一个新分支"><a href="#从-master-分支创建一个新分支" class="headerlink" title="从 master 分支创建一个新分支"></a>从 master 分支创建一个新分支</h1><p>如果团队中的每个人都在同一个分支上开发，那这个分支将会变得非常混乱。针对某个特性进行修改或修复错误将会变得非常困难，特别是代码审查和错误排查也将变得难以进行。</p>
+<p>所以在开发中合理利用 <strong>分支(branch)</strong> 是非常重要的事情。</p>
+<p>首先，<strong>检出(checkout)</strong> 将要创建新分支的分支，这里自然就是 master 分支：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 检出 master 分支</span></span><br><span class="line">$ git checkout master</span><br></pre></td></tr></table></figure>
+
+<p>然后基于当前分支创建一个新分支：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 创建一个名为 newfeature 的新分支</span></span><br><span class="line">$ git branch newfeature</span><br><span class="line"></span><br><span class="line"><span class="comment"># 切换到新分支上</span></span><br><span class="line">$ git checkout newfeature</span><br></pre></td></tr></table></figure>
+
+<p>很明显，<code>branch</code> 命令用于创建分支，但是并不会帮我们切换到新分支上面。如果想要切换到新分支，一样是用 <code>checkout</code> 命令。</p>
+<p>但是大部分情况下，我们想要的都是：<em>创建并切换到新分支</em>，这有个快捷的方式：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 创建一个名为 newfeature 的新分支并切换到这个分支上</span></span><br><span class="line">$ git checkout -b newfeature</span><br></pre></td></tr></table></figure>
+
+<p>对于分支的命名，也应遵守一些规范，比如：</p>
+<ul>
+<li>master：主分支，用于生产环境，一般由 develop 和 hotfix 分支合并而成</li>
+<li>develop：主要的开发分支</li>
+<li>feature：基于 develop 分支，开发新功能的分支</li>
+<li>hotfix：基于 master 分支，修复 master 分支上问题的分支</li>
+</ul>
+<h1 id="更新、清理分支"><a href="#更新、清理分支" class="headerlink" title="更新、清理分支"></a>更新、清理分支</h1><p>当我们完成改进，也在新分支提交了一些 commit，接下来就是将改进的代码上传到远程自己的仓库里，然后创建一个 <strong>拉取请求</strong> 了。</p>
+<p>但是在上传之前，为了让原仓库的所有者更方便的审核并测试代码，我们需要对分支进行一些操作。</p>
+<p>在我们工作的同时，原仓库也在更新。所以这时候我们应该先更新到最新的代码，保证我们在本地做的工作不会和原仓库发生冲突。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 从上游仓库抓取最新内容，并将上游仓库的更新合并进本地 master 分支</span></span><br><span class="line">$ git fetch upstream</span><br><span class="line">$ git checkout master</span><br><span class="line">$ git merge upstream/master</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将更新应用到 newfeature 分支</span></span><br><span class="line">$ git checkout newfeature</span><br><span class="line">$ git rebase master</span><br></pre></td></tr></table></figure>
+
+<p>在更新原仓库的内容之后，就是清理我们的 commit。在实际开发中，我们经常会提交一些相似的、细碎的 commit，所以我们在上传代码之前应该先清理一下。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git checkout </span><br><span class="line">$ git rebase -i master</span><br></pre></td></tr></table></figure>
+
+<p>现在可以上传我们的改进了。</p>
+<h1 id="创建拉取请求"><a href="#创建拉取请求" class="headerlink" title="创建拉取请求"></a>创建拉取请求</h1><p>上传代码之后，我们就可以去自己的仓库页面点击 <strong>New pull request</strong> 按钮，即可发起一个 <strong>拉取请求</strong>。</p>
+<p>发起之后，就可以等待原仓库的所有者对这个请求进行合并、拒绝或是发表评论了。</p>
+<h1 id="结束"><a href="#结束" class="headerlink" title="结束"></a>结束</h1><p>本文只是描述如何用较为标准的方式参与一个开源项目。其中使用到的一些东西，比如 <strong>变基(rebase)</strong>，内容太多，讲起来可能会偏离本文的主题，所以并没有过多的说明，未来可能会单独拿出来讲。</p>
+<p>最后祝大家没有机会使用到 hotfix 分支😀。</p>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div>如果你喜欢我的博客，那就请我吃冰淇淋吧（づ￣3￣）づ╭❤～</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.png" alt="LJason 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="LJason 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>LJason
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://ljason.cn/Git-Fork/" title="Git——为开源项目做贡献">https://ljason.cn/Git-Fork/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+        
+
+  <div class="followme">
+    <p>欢迎关注我的其它发布渠道</p>
+
+    <div class="social-list">
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="https://twitter.com/LJason77">
+            <span class="icon">
+              <i class="fab fa-twitter"></i>
+            </span>
+
+            <span class="label">Twitter</span>
+          </a>
+        </div>
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="https://t.me/LJason">
+            <span class="icon">
+              <i class="fab fa-telegram"></i>
+            </span>
+
+            <span class="label">Telegram</span>
+          </a>
+        </div>
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+        </div>
+    </div>
+  </div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Git/" rel="tag"># Git</a>
+              <a href="/tags/%E5%A4%9A%E4%BA%BA%E5%8D%8F%E4%BD%9C/" rel="tag"># 多人协作</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Kaomoji-on-Win10/" rel="prev" title="在 Win10 输入颜文字(╯°□°)╯︵ ┻━┻">
+      <i class="fa fa-chevron-left"></i> 在 Win10 输入颜文字(╯°□°)╯︵ ┻━┻
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#派生一个项目"><span class="nav-number">1.</span> <span class="nav-text">派生一个项目</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#保持项目为最新的状态"><span class="nav-number">2.</span> <span class="nav-text">保持项目为最新的状态</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#从-master-分支创建一个新分支"><span class="nav-number">3.</span> <span class="nav-text">从 master 分支创建一个新分支</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#更新、清理分支"><span class="nav-number">4.</span> <span class="nav-text">更新、清理分支</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#创建拉取请求"><span class="nav-number">5.</span> <span class="nav-text">创建拉取请求</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#结束"><span class="nav-number">6.</span> <span class="nav-text">结束</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">LJason</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">43</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">51</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/LJason77" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LJason77" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:ljason@ljason.cn" title="E-Mail → mailto:ljason@ljason.cn"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/LJason77" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;LJason77" rel="noopener" target="_blank"><i class="fab fa-twitter fa-fw"></i>Twitter</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.youtube.com/channel/UCQkIv5pqfeCdBpvNwGgkGxg?view_as=subscriber" title="YouTube → https:&#x2F;&#x2F;www.youtube.com&#x2F;channel&#x2F;UCQkIv5pqfeCdBpvNwGgkGxg?view_as&#x3D;subscriber" rel="noopener" target="_blank"><i class="fab fa-youtube fa-fw"></i>YouTube</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.instagram.com/ljason77/" title="Instagram → https:&#x2F;&#x2F;www.instagram.com&#x2F;ljason77&#x2F;" rel="noopener" target="_blank"><i class="fab fa-instagram fa-fw"></i>Instagram</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">LJason</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/disqusjs@1/dist/disqusjs.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/disqusjs@1/dist/disqus.js', () => {
+    window.dsqjs = new DisqusJS({
+      api       : '' || 'https://disqus.com/api/',
+      apikey    : 'FwKuMa70aljw150V4NCz1NeCCiOaulpmRYKY2mT1ogMCX29oqVcdu9HFniPS8JrD',
+      shortname : '951203598',
+      url       : "https://ljason.cn/Git-Fork/",
+      identifier: "Git-Fork/",
+      title     : "Git——为开源项目做贡献",
+    });
+  }, window.DisqusJS);
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="005SuinPhVVcjIK7c7flsNVdrDPrmLYPfUJQgH27uOI">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"ljason.cn","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="首先，这是一个翻墙软件，至于为什么翻墙以及翻墙之后能干什么，找度娘。这个软件申请账号后，有一个时间限制（以前有一个活动可以得到试用期，不过现在活动已经过了，即使新申请的账号也不能试用了，只能购买VIP）。本文的目的就是去除这个限制。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="软件破解第一战">
+<meta property="og:url" content="https://ljason.cn/Practice-Crack-Zero/">
+<meta property="og:site_name" content="野生程序猴子">
+<meta property="og:description" content="首先，这是一个翻墙软件，至于为什么翻墙以及翻墙之后能干什么，找度娘。这个软件申请账号后，有一个时间限制（以前有一个活动可以得到试用期，不过现在活动已经过了，即使新申请的账号也不能试用了，只能购买VIP）。本文的目的就是去除这个限制。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://ljason.cn/Practice-Crack-Zero/00.webp">
+<meta property="og:image" content="https://ljason.cn/Practice-Crack-Zero/01.webp">
+<meta property="og:image" content="https://ljason.cn/Practice-Crack-Zero/02.webp">
+<meta property="og:image" content="https://ljason.cn/Practice-Crack-Zero/03.webp">
+<meta property="og:image" content="https://ljason.cn/Practice-Crack-Zero/04.webp">
+<meta property="og:image" content="https://ljason.cn/Practice-Crack-Zero/05.webp">
+<meta property="og:image" content="https://ljason.cn/Practice-Crack-Zero/06.webp">
+<meta property="og:image" content="https://ljason.cn/Practice-Crack-Zero/07.webp">
+<meta property="og:image" content="https://ljason.cn/Practice-Crack-Zero/08.webp">
+<meta property="og:image" content="https://ljason.cn/Practice-Crack-Zero/09.webp">
+<meta property="og:image" content="https://ljason.cn/Practice-Crack-Zero/10.webp">
+<meta property="og:image" content="https://ljason.cn/Practice-Crack-Zero/11.webp">
+<meta property="og:image" content="https://ljason.cn/Practice-Crack-Zero/12.webp">
+<meta property="article:published_time" content="2015-10-05T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-04-28T16:36:31.280Z">
+<meta property="article:author" content="LJason">
+<meta property="article:tag" content="Android">
+<meta property="article:tag" content="破解">
+<meta property="article:tag" content="实战">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://ljason.cn/Practice-Crack-Zero/00.webp">
+
+<link rel="canonical" href="https://ljason.cn/Practice-Crack-Zero/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>软件破解第一战 | 野生程序猴子</title>
+  
+    <script>
+      function sendPageView() {
+        if (CONFIG.hostname !== location.hostname) return;
+        var uid = localStorage.getItem('uid') || (Math.random() + '.' + Math.random());
+        localStorage.setItem('uid', uid);
+        navigator.sendBeacon('https://www.google-analytics.com/collect', new URLSearchParams({
+          v  : 1,
+          tid: 'UA-71060796-2',
+          cid: uid,
+          t  : 'pageview',
+          dp : encodeURIComponent(location.pathname)
+        }));
+      }
+      document.addEventListener('pjax:complete', sendPageView);
+      sendPageView();
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="野生程序猴子" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">野生程序猴子</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://ljason.cn/Practice-Crack-Zero/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="LJason">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="野生程序猴子">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          软件破解第一战
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2015-10-06 00:00:00" itemprop="dateCreated datePublished" datetime="2015-10-06T00:00:00+08:00">2015-10-06</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-04-29 00:36:31" itemprop="dateModified" datetime="2020-04-29T00:36:31+08:00">2020-04-29</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%A0%B4%E8%A7%A3/" itemprop="url" rel="index"><span itemprop="name">破解</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>　　首先，这是一个翻墙软件，至于为什么翻墙以及翻墙之后能干什么，找度娘。这个软件申请账号后，有一个时间限制（以前有一个活动可以得到试用期，不过现在活动已经过了，即使新申请的账号也不能试用了，只能购买VIP）。本文的目的就是去除这个限制。  </p>
+<a id="more"></a>
+
+<p>　　软件：<a href="http://pan.baidu.com/s/1c1YFCXy" target="_blank" rel="noopener" title="密码: vi36">thorvpn</a>  </p>
+<h1 id="教程"><a href="#教程" class="headerlink" title="教程"></a>教程</h1><p>　　反编译软件（不会反编译的看这里：<a href="../03/PC-Reverse-Engineering.html" title="反编译之——PC端反编译教程">PC端</a>、<a href="../../09/30/Android-Reverse-Engineering.html" title="反编译之——手机端反编译教程">手机端</a>），搜索图中文字“<code>您的服务已到期</code>”。很幸运，可以搜索出来，文件位置在如图第一个框，第77行。  </p>
+<img src="/Practice-Crack-Zero/00.webp" class="">
+
+<p>　　继续搜索<code>name</code>后面的<code>dlg_message_service_expired</code>。  </p>
+<img src="/Practice-Crack-Zero/01.webp" class="">
+
+<p>　　搜索<code>dlg_message_service_expired</code>之后出来四个结果，如图。我们应该找的是第一个。因为第一个有一个ID。至于为什么不是其他三个，这涉及到Android编程知识，这里就不叙述了。  </p>
+<img src="/Practice-Crack-Zero/02.webp" class="">
+
+<p>　　继续搜索ID后面的字符串<code>0x7f090057</code>。  </p>
+<p>　　搜索ID之后出来两个结果，第一个是原来的，不用管。第二个就是我们要找的。  </p>
+<img src="/Practice-Crack-Zero/03.webp" class="">
+
+<p>　　找到ID的位置。我们的重点来了，在ID上面，红框圈住的地方。  </p>
+<img src="/Practice-Crack-Zero/04.webp" class="">
+
+<h2 id="这个是Dalvik指令集三种跳转之一的if跳转，解释见下："><a href="#这个是Dalvik指令集三种跳转之一的if跳转，解释见下：" class="headerlink" title="这个是Dalvik指令集三种跳转之一的if跳转，解释见下："></a>这个是Dalvik指令集三种跳转之一的if跳转，解释见下：</h2><h3 id="if跳转又分两种："><a href="#if跳转又分两种：" class="headerlink" title="if跳转又分两种："></a>if跳转又分两种：</h3><p>　　第一种指令为<code>if-test vA,vB,+CCCC</code>  </p>
+<blockquote>
+<p>比较vA寄存器和vB寄存器的值，如果比较结果满足就跳转到CCCC指定的偏移处。<br><code>if-test</code>类型的指令有以下几条：<br><code>if-eq vA, vB, CCCC</code> 如果vA == vB，跳转到CCCC<br><code>if-ne vA,vB, CCCC</code> 如果vA != vB，跳转到CCCC<br><code>if-lt vA,vB, CCCC</code> 如果vA &lt; vB，跳转到CCCC<br><code>if-ge vA, vB, CCCC</code> 如果vA &gt;= vB，跳转到CCCC<br><code>if-gt vA,vB, CCCC</code> 如果vA &gt; vB，跳转到CCCC<br><code>if-le vA,vB, CCCC</code> 如果vA &lt;= vB，跳转到CCCC  </p>
+</blockquote>
+<p>　　第二种指令为<code>if-testz vAA,+BBBB</code>  </p>
+<blockquote>
+<p>用vAA寄存器和0比较，，如果比较结果满足或值为0时就跳转到BBBB指定的偏移处。<br><code>if-testz</code>类型的指令有以下几条：<br><code>if-eqz vAA, BBBB</code> 如果vAA == 0，跳转到BBBB<br><code>if-nez vAA, BBBB</code> 如果vAA != 0，跳转到BBBB<br><code>if-ltz vAA, BBBB</code> 如果vAA &lt; 0，跳转到BBBB<br><code>if-gez vAA, BBBB</code> 如果vAA &gt;= 0，跳转到BBBB<br><code>if-gtz vAA, BBBB</code> 如果vAA &gt; 0，跳转到BBBB<br><code>if-lez vAA, BBBB</code> 如果vAA &lt;= 0，跳转到BBBB  </p>
+</blockquote>
+<p><strong>==是等于、!=是不等于、&lt;是小于、&gt;是大于、&lt;=是小于等于、&gt;=是大于等于。</strong></p>
+<p>　　在上图的红框里，程序判断v0和v3的值，很明显判断过程是v0&gt;=v3，结果不满足，则程序继续向下执行。  </p>
+<p>　　执行到ID部分，显示字符串，就是显示“您的服务已到期”。  </p>
+<p>　　那么如果在显示字符串之前，在判断时间是否到期的时候，跳转到另一个分支，不就可以达到破解的目的了吗？  </p>
+<p>　　既然判断指令是<code>if-ge</code>，我们就改成与之相反的<code>if-lt</code>。改完保存，回编译，签名安装试试。  </p>
+<img src="/Practice-Crack-Zero/05.webp" class="">
+
+<p>　　点击按钮虽然没弹出服务已到期，不过也没成功连接，说明破解失败了。  </p>
+<p>　　既然失败了，说明这个跳转不是判断时间是否超时的，我们继续向上寻找。我们可以看到，在<code>if-ge</code>之上，已经没有if跳转了：  </p>
+<img src="/Practice-Crack-Zero/06.webp" class="">
+
+<p>　　虽然已经没有if跳转了，不过我们继续向上可以看到<code>.method</code>。<code>.method</code>是反汇编代码声明方法的指令。  </p>
+<p>　　现在怎么办呢？搜索<code>.method</code>那行括号里面的：  </p>
+<img src="/Practice-Crack-Zero/07.webp" class="">
+
+<p>　　搜索出来三个结果，我们选第三个。  </p>
+<img src="/Practice-Crack-Zero/08.webp" class="">
+
+<p>　　为什么呢，因为第三个是跳转到这里的，就是说第三个是这个的上级。  </p>
+<p>　　按照思路，找到这里。离跳转最近的地方有一个if跳转。  </p>
+<img src="/Practice-Crack-Zero/09.webp" class="">
+
+<p>　　<code>if-eqz v0, :cond_0</code>，意思是如果v0==0，跳转到<code>cond_0</code>。  </p>
+<p>　　很明显这里没有跳转，因为没有跳转才能继续执行下面的指令。  </p>
+<p>　　我们把它改成<code>if-nez</code>，保存，回编译，签名安装。  </p>
+<p>　　结果还是一样，点击按钮没反应。我们继续破解。  </p>
+<p>　　在这个if跳转之上，有一个<code>:cond_2</code>。  </p>
+<img src="/Practice-Crack-Zero/10.webp" class="">
+
+<p>　　就是说，这是跳转之后来到<code>cond_2</code>的。  </p>
+<p>　　我们找到<code>cond_2</code>的源头。  </p>
+<img src="/Practice-Crack-Zero/11.webp" class="">
+
+<p>　　就在上面不远处，老规矩，修改<code>if-nez</code>为<code>if-eqz</code>。  </p>
+<p>　　保存，回编译，签名安装。  </p>
+<p>　　点击按钮.弹出这个.恭喜你.破解成功了。  </p>
+<img src="/Practice-Crack-Zero/12.webp" class="">
+
+<p>　　教程到这里结束了。  </p>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div>如果你喜欢我的博客，那就请我吃冰淇淋吧（づ￣3￣）づ╭❤～</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.png" alt="LJason 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="LJason 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>LJason
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://ljason.cn/Practice-Crack-Zero/" title="软件破解第一战">https://ljason.cn/Practice-Crack-Zero/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+        
+
+  <div class="followme">
+    <p>欢迎关注我的其它发布渠道</p>
+
+    <div class="social-list">
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="https://twitter.com/LJason77">
+            <span class="icon">
+              <i class="fab fa-twitter"></i>
+            </span>
+
+            <span class="label">Twitter</span>
+          </a>
+        </div>
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="https://t.me/LJason">
+            <span class="icon">
+              <i class="fab fa-telegram"></i>
+            </span>
+
+            <span class="label">Telegram</span>
+          </a>
+        </div>
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+        </div>
+    </div>
+  </div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Android/" rel="tag"># Android</a>
+              <a href="/tags/%E7%A0%B4%E8%A7%A3/" rel="tag"># 破解</a>
+              <a href="/tags/%E5%AE%9E%E6%88%98/" rel="tag"># 实战</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/PC-Reverse-Engineering/" rel="prev" title="反编译之——PC端反编译教程">
+      <i class="fa fa-chevron-left"></i> 反编译之——PC端反编译教程
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/Android-Develop-SetUp-Java/" rel="next" title="搭建Android开发环境01——Java">
+      搭建Android开发环境01——Java <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#教程"><span class="nav-number">1.</span> <span class="nav-text">教程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#这个是Dalvik指令集三种跳转之一的if跳转，解释见下："><span class="nav-number">1.1.</span> <span class="nav-text">这个是Dalvik指令集三种跳转之一的if跳转，解释见下：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#if跳转又分两种："><span class="nav-number">1.1.1.</span> <span class="nav-text">if跳转又分两种：</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">LJason</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">43</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">51</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/LJason77" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LJason77" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:ljason@ljason.cn" title="E-Mail → mailto:ljason@ljason.cn"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/LJason77" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;LJason77" rel="noopener" target="_blank"><i class="fab fa-twitter fa-fw"></i>Twitter</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.youtube.com/channel/UCQkIv5pqfeCdBpvNwGgkGxg?view_as=subscriber" title="YouTube → https:&#x2F;&#x2F;www.youtube.com&#x2F;channel&#x2F;UCQkIv5pqfeCdBpvNwGgkGxg?view_as&#x3D;subscriber" rel="noopener" target="_blank"><i class="fab fa-youtube fa-fw"></i>YouTube</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.instagram.com/ljason77/" title="Instagram → https:&#x2F;&#x2F;www.instagram.com&#x2F;ljason77&#x2F;" rel="noopener" target="_blank"><i class="fab fa-instagram fa-fw"></i>Instagram</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">LJason</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/disqusjs@1/dist/disqusjs.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/disqusjs@1/dist/disqus.js', () => {
+    window.dsqjs = new DisqusJS({
+      api       : '' || 'https://disqus.com/api/',
+      apikey    : 'FwKuMa70aljw150V4NCz1NeCCiOaulpmRYKY2mT1ogMCX29oqVcdu9HFniPS8JrD',
+      shortname : '951203598',
+      url       : "https://ljason.cn/Practice-Crack-Zero/",
+      identifier: "Practice-Crack-Zero/",
+      title     : "软件破解第一战",
+    });
+  }, window.DisqusJS);
+});
+</script>
+
+</body>
+</html>

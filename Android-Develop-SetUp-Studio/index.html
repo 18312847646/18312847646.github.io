@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="005SuinPhVVcjIK7c7flsNVdrDPrmLYPfUJQgH27uOI">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"ljason.cn","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="到这里，Java 环境搭建好了，Android SDK 也下载好了，下面就开始神奇的 Android Studio 之旅。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="搭建Android开发环境03——Android Studio">
+<meta property="og:url" content="https://ljason.cn/Android-Develop-SetUp-Studio/">
+<meta property="og:site_name" content="野生程序猴子">
+<meta property="og:description" content="到这里，Java 环境搭建好了，Android SDK 也下载好了，下面就开始神奇的 Android Studio 之旅。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://ljason.cn/images/Android/Develop/SetUp/Studio/0.webp">
+<meta property="og:image" content="https://ljason.cn/images/Android/Develop/SetUp/Studio/1.webp">
+<meta property="og:image" content="https://ljason.cn/images/Android/Develop/SetUp/Studio/2.webp">
+<meta property="og:image" content="https://ljason.cn/images/Android/Develop/SetUp/Studio/3.webp">
+<meta property="og:image" content="https://ljason.cn/images/Android/Develop/SetUp/Studio/4.webp">
+<meta property="og:image" content="https://ljason.cn/images/Android/Develop/SetUp/Studio/5.webp">
+<meta property="og:image" content="https://ljason.cn/images/Android/Develop/SetUp/Studio/6.webp">
+<meta property="og:image" content="https://ljason.cn/images/Android/Develop/SetUp/Studio/7.webp">
+<meta property="og:image" content="https://ljason.cn/images/Android/Develop/SetUp/Studio/8.webp">
+<meta property="og:image" content="https://ljason.cn/images/Android/Develop/SetUp/Studio/9.webp">
+<meta property="article:published_time" content="2015-10-20T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-04-28T16:36:31.584Z">
+<meta property="article:author" content="LJason">
+<meta property="article:tag" content="Android">
+<meta property="article:tag" content="搭建">
+<meta property="article:tag" content="环境">
+<meta property="article:tag" content="教程">
+<meta property="article:tag" content="Android Studio">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://ljason.cn/images/Android/Develop/SetUp/Studio/0.webp">
+
+<link rel="canonical" href="https://ljason.cn/Android-Develop-SetUp-Studio/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>搭建Android开发环境03——Android Studio | 野生程序猴子</title>
+  
+    <script>
+      function sendPageView() {
+        if (CONFIG.hostname !== location.hostname) return;
+        var uid = localStorage.getItem('uid') || (Math.random() + '.' + Math.random());
+        localStorage.setItem('uid', uid);
+        navigator.sendBeacon('https://www.google-analytics.com/collect', new URLSearchParams({
+          v  : 1,
+          tid: 'UA-71060796-2',
+          cid: uid,
+          t  : 'pageview',
+          dp : encodeURIComponent(location.pathname)
+        }));
+      }
+      document.addEventListener('pjax:complete', sendPageView);
+      sendPageView();
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="野生程序猴子" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">野生程序猴子</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://ljason.cn/Android-Develop-SetUp-Studio/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="LJason">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="野生程序猴子">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          搭建Android开发环境03——Android Studio
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2015-10-21 00:00:00" itemprop="dateCreated datePublished" datetime="2015-10-21T00:00:00+08:00">2015-10-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-04-29 00:36:31" itemprop="dateModified" datetime="2020-04-29T00:36:31+08:00">2020-04-29</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android%E5%BC%80%E5%8F%91/" itemprop="url" rel="index"><span itemprop="name">Android开发</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>　　到这里，Java 环境搭建好了，Android SDK 也下载好了，下面就开始神奇的 Android Studio 之旅。  </p>
+<a id="more"></a>
+
+<p>　　由于帝国已经不能愉快的访问 Google 了，我就把 Android Studio（下文称<strong>AS</strong>）上传到网盘了：<a href="http://pan.baidu.com/s/1gfwqeLt" target="_blank" rel="noopener" title="密码：lv3b">Android Studio</a>，解压即可使用。  </p>
+<h1 id="第一次打开-Android-Studio"><a href="#第一次打开-Android-Studio" class="headerlink" title="第一次打开 Android Studio"></a>第一次打开 Android Studio</h1><p>　　打开 AS 目录=&gt;<code>bin</code>=&gt;<code>studio64.exe</code>。第一次打开 AS 会提示导入设置，因为大部分人都是第一次接触，没有用过的设置，所以选第二个。  </p>
+<center>
+    <p><img src="/images/Android/Develop/SetUp/Studio/0.webp" align="center"></p>
+</center>
+
+<p>　　等待一会进入欢迎界面，next 之后进入安装类型，我们选 <code>Custom</code>。  </p>
+<center>
+    <p><img src="/images/Android/Develop/SetUp/Studio/1.webp" align="center"></p>
+</center>
+
+<p>　　来到设置主题界面，我们选择狂拽炫酷叼咋天的<code>Darcula</code>（我猜很少人会选择亮瞎眼的白色主题吧…）。  </p>
+<center>
+    <p><img src="/images/Android/Develop/SetUp/Studio/2.webp" align="center"></p>
+</center>
+
+<p>　　在设置 SDK 目录界面，设置好我们自己下载并解压的 SDK 目录。不用理会红色警告。  </p>
+<center>
+    <p><img src="/images/Android/Develop/SetUp/Studio/3.webp" align="center"></p>
+</center>
+
+<p>　　直到这里提示<code>Android SDK is up to date.</code>，Finish 结束设置。</p>
+<center>
+    <p><img src="/images/Android/Develop/SetUp/Studio/4.webp" align="center"></p>
+</center>
+
+<p>　　欢迎入坑。  </p>
+<h1 id="更新"><a href="#更新" class="headerlink" title="更新"></a>更新</h1><p>　　很多人都说 AS 很卡。的确，AS 在前期是比较卡，但是后来 AS 更新升级之后优化了很多，不再是吃配置的小怪兽了。如果你的不是最新版，那么建议你升级吧。最新版是<code>AI-162.3573574</code>，由于AS一星期一更，所以这里发一下离线更新和在线更新的方法。  </p>
+<h2 id="离线更新"><a href="#离线更新" class="headerlink" title="离线更新"></a>离线更新</h2><p>　　检测是否为最新版：<a href="https://dl.google.com/android/studio/patches/updates.xml" target="_blank" rel="noopener" title="Android Studio版本">https://dl.google.com/android/studio/patches/updates.xml</a>  </p>
+<p>　　图中红框即为现在的最新版本号。  </p>
+<center>
+    <p><img src="/images/Android/Develop/SetUp/Studio/5.webp" align="center"></p>
+</center>
+
+<p>　　对比AS目录下的 build.txt 里面的版本号就知道是否要更新了。  </p>
+<p>　　更新的补丁下载链接为：<code>https://dl.google.com/android/studio/patches/AI-</code><strong>当前安装版本号</strong><code>-</code><strong>更新的目标版本</strong><code>-patch-win.jar</code>。  </p>
+<p>　　比如当前版本为<code>141.2279206</code>，最新版为<code>162.3573574</code>，则链接为<code>https://dl.google.com/android/studio/patches/AI-141.2279206-141.2288178-patch-win.jar</code>。  </p>
+<p>　　接下来关闭所有与 AS 相关的进程，把下载的 jar 拷贝到AS目录外的任意位置，启动 cmd，将路径定位到 jar 的文件夹中，输入</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">java</span> <span class="selector-tag">-classpath</span> &lt;<span class="selector-tag">jar</span>名字&gt; <span class="selector-tag">com</span><span class="selector-class">.intellij</span><span class="selector-class">.updater</span><span class="selector-class">.Runner</span> <span class="selector-tag">install</span> &lt;<span class="selector-tag">AS</span>目录&gt;</span><br></pre></td></tr></table></figure>
+
+<p>　　由于我用的是虚拟机，所以就直接放在桌面了，如图。  </p>
+<center>
+    <p><img src="/images/Android/Develop/SetUp/Studio/6.webp" align="center"></p>
+</center>
+
+<p>　　按回车稍等一下就能更新完毕了。  </p>
+<p><strong>2016.12.26： 新版跨度太大，这种方法有很大概率下载失败。</strong></p>
+<h2 id="在线更新"><a href="#在线更新" class="headerlink" title="在线更新"></a>在线更新</h2><p>　　关闭所有与 AS 相关的进程，在 AS 目录中打开<code>bin</code>=&gt;<code>studio64.exe.vmoptions</code>，最后一行加上：  </p>
+<figure class="highlight haml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-<span class="ruby">Didea.updates.url=<span class="symbol">https:</span>/<span class="regexp">/dl.google.com/android</span><span class="regexp">/studio/patches</span><span class="regexp">/updates.xml  </span></span></span><br><span class="line"><span class="ruby">-Didea.patches.url=<span class="symbol">https:</span>/<span class="regexp">/dl.google.com/android</span><span class="regexp">/studio/patches</span><span class="regexp">/</span></span></span><br></pre></td></tr></table></figure>
+
+<p>　　启动 AS，点击 Check 检查更新即可。  </p>
+<center>
+    <p><img src="/images/Android/Develop/SetUp/Studio/7.webp" align="center"></p>
+</center>
+
+<p>　　由于我现在用的是最新版，所以显示这个。  </p>
+<center>
+    <p><img src="/images/Android/Develop/SetUp/Studio/8.webp" align="center"></p>
+</center>
+
+<h1 id="Android-Studio优化"><a href="#Android-Studio优化" class="headerlink" title="Android Studio优化"></a>Android Studio优化</h1><p>　　关于更新之后还会卡，还有几招。  </p>
+<ul>
+<li>改配置文件<br>在 AS 目录中打开<code>bin</code>=&gt;<code>studio64.exe.vmoptions</code>，修改前面的参数。改大点，但是量力而行，<code>Xmx</code>一般为你内存的四分之一即可，如果你的内存比较大可以大点。这是我的配置。  </li>
+</ul>
+<center>
+    <p><img src="/images/Android/Develop/SetUp/Studio/9.webp" align="center"></p>
+</center>
+
+<ul>
+<li>关闭不需要的插件<br>在设置里找到Plugins，关闭一些不常用或者没必要的插件也能提高运行速度。比如带有 Google 字样的，在帝国根本用不了，就可以关闭；还有用不到的版本控制也可以关闭。  </li>
+</ul>
+<h2 id="推荐阅读"><a href="#推荐阅读" class="headerlink" title="推荐阅读"></a>推荐阅读</h2><ul>
+<li><a href="../09/Android-Develop-SetUp-Java.html">搭建Android开发环境01——Java</a>  </li>
+<li><a href="../12/Android-Develop-SetUp-SDK.html">搭建Android开发环境02——Android SDK</a>  </li>
+</ul>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div>如果你喜欢我的博客，那就请我吃冰淇淋吧（づ￣3￣）づ╭❤～</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.png" alt="LJason 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="LJason 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>LJason
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://ljason.cn/Android-Develop-SetUp-Studio/" title="搭建Android开发环境03——Android Studio">https://ljason.cn/Android-Develop-SetUp-Studio/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+        
+
+  <div class="followme">
+    <p>欢迎关注我的其它发布渠道</p>
+
+    <div class="social-list">
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="https://twitter.com/LJason77">
+            <span class="icon">
+              <i class="fab fa-twitter"></i>
+            </span>
+
+            <span class="label">Twitter</span>
+          </a>
+        </div>
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="https://t.me/LJason">
+            <span class="icon">
+              <i class="fab fa-telegram"></i>
+            </span>
+
+            <span class="label">Telegram</span>
+          </a>
+        </div>
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+        </div>
+    </div>
+  </div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Android/" rel="tag"># Android</a>
+              <a href="/tags/%E6%90%AD%E5%BB%BA/" rel="tag"># 搭建</a>
+              <a href="/tags/%E7%8E%AF%E5%A2%83/" rel="tag"># 环境</a>
+              <a href="/tags/%E6%95%99%E7%A8%8B/" rel="tag"># 教程</a>
+              <a href="/tags/Android-Studio/" rel="tag"># Android Studio</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Python-Develop-SetUp-PyCharm/" rel="prev" title="搭建Python开发环境02——PyCharm">
+      <i class="fa fa-chevron-left"></i> 搭建Python开发环境02——PyCharm
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/Android-Develop-SetUp-StudioOptimize/" rel="next" title="搭建Android开发环境03.1——Android Studio的优化">
+      搭建Android开发环境03.1——Android Studio的优化 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#第一次打开-Android-Studio"><span class="nav-number">1.</span> <span class="nav-text">第一次打开 Android Studio</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#更新"><span class="nav-number">2.</span> <span class="nav-text">更新</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#离线更新"><span class="nav-number">2.1.</span> <span class="nav-text">离线更新</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#在线更新"><span class="nav-number">2.2.</span> <span class="nav-text">在线更新</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Android-Studio优化"><span class="nav-number">3.</span> <span class="nav-text">Android Studio优化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#推荐阅读"><span class="nav-number">3.1.</span> <span class="nav-text">推荐阅读</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">LJason</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">43</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">51</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/LJason77" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LJason77" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:ljason@ljason.cn" title="E-Mail → mailto:ljason@ljason.cn"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/LJason77" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;LJason77" rel="noopener" target="_blank"><i class="fab fa-twitter fa-fw"></i>Twitter</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.youtube.com/channel/UCQkIv5pqfeCdBpvNwGgkGxg?view_as=subscriber" title="YouTube → https:&#x2F;&#x2F;www.youtube.com&#x2F;channel&#x2F;UCQkIv5pqfeCdBpvNwGgkGxg?view_as&#x3D;subscriber" rel="noopener" target="_blank"><i class="fab fa-youtube fa-fw"></i>YouTube</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.instagram.com/ljason77/" title="Instagram → https:&#x2F;&#x2F;www.instagram.com&#x2F;ljason77&#x2F;" rel="noopener" target="_blank"><i class="fab fa-instagram fa-fw"></i>Instagram</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">LJason</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/disqusjs@1/dist/disqusjs.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/disqusjs@1/dist/disqus.js', () => {
+    window.dsqjs = new DisqusJS({
+      api       : '' || 'https://disqus.com/api/',
+      apikey    : 'FwKuMa70aljw150V4NCz1NeCCiOaulpmRYKY2mT1ogMCX29oqVcdu9HFniPS8JrD',
+      shortname : '951203598',
+      url       : "https://ljason.cn/Android-Develop-SetUp-Studio/",
+      identifier: "Android-Develop-SetUp-Studio/",
+      title     : "搭建Android开发环境03——Android Studio",
+    });
+  }, window.DisqusJS);
+});
+</script>
+
+</body>
+</html>

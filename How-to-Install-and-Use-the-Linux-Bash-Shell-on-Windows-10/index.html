@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="005SuinPhVVcjIK7c7flsNVdrDPrmLYPfUJQgH27uOI">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"ljason.cn","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Windows 10 的周年更新为开发人员提供了一个巨大的新功能：一个完整的、基于 Ubuntu 的 Bash Shell，可以直接在 Windows 上运行 Linux 软件。这是微软通过添加新的 “Windows Subsystem for Linux”（Windows 的 Linux 子系统，下文简称 WSL） 实现的。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何在 Windows 10 上安装和使用 Linux Bash Shell">
+<meta property="og:url" content="https://ljason.cn/How-to-Install-and-Use-the-Linux-Bash-Shell-on-Windows-10/">
+<meta property="og:site_name" content="野生程序猴子">
+<meta property="og:description" content="Windows 10 的周年更新为开发人员提供了一个巨大的新功能：一个完整的、基于 Ubuntu 的 Bash Shell，可以直接在 Windows 上运行 Linux 软件。这是微软通过添加新的 “Windows Subsystem for Linux”（Windows 的 Linux 子系统，下文简称 WSL） 实现的。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://ljason.cn/How-to-Install-and-Use-the-Linux-Bash-Shell-on-Windows-10/00.webp">
+<meta property="og:image" content="https://ljason.cn/How-to-Install-and-Use-the-Linux-Bash-Shell-on-Windows-10/01.webp">
+<meta property="og:image" content="https://ljason.cn/How-to-Install-and-Use-the-Linux-Bash-Shell-on-Windows-10/02.webp">
+<meta property="og:image" content="https://ljason.cn/How-to-Install-and-Use-the-Linux-Bash-Shell-on-Windows-10/03.webp">
+<meta property="og:image" content="https://ljason.cn/How-to-Install-and-Use-the-Linux-Bash-Shell-on-Windows-10/04.webp">
+<meta property="og:image" content="https://ljason.cn/How-to-Install-and-Use-the-Linux-Bash-Shell-on-Windows-10/05.webp">
+<meta property="og:image" content="https://ljason.cn/How-to-Install-and-Use-the-Linux-Bash-Shell-on-Windows-10/06.webp">
+<meta property="og:image" content="https://ljason.cn/How-to-Install-and-Use-the-Linux-Bash-Shell-on-Windows-10/07.webp">
+<meta property="og:image" content="https://ljason.cn/How-to-Install-and-Use-the-Linux-Bash-Shell-on-Windows-10/08.webp">
+<meta property="og:image" content="https://ljason.cn/How-to-Install-and-Use-the-Linux-Bash-Shell-on-Windows-10/09.webp">
+<meta property="og:image" content="https://ljason.cn/How-to-Install-and-Use-the-Linux-Bash-Shell-on-Windows-10/10.webp">
+<meta property="og:image" content="https://ljason.cn/How-to-Install-and-Use-the-Linux-Bash-Shell-on-Windows-10/11.webp">
+<meta property="article:published_time" content="2017-03-31T14:47:10.000Z">
+<meta property="article:modified_time" content="2020-04-28T16:36:30.768Z">
+<meta property="article:author" content="LJason">
+<meta property="article:tag" content="翻译">
+<meta property="article:tag" content="Win10">
+<meta property="article:tag" content="WSL">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://ljason.cn/How-to-Install-and-Use-the-Linux-Bash-Shell-on-Windows-10/00.webp">
+
+<link rel="canonical" href="https://ljason.cn/How-to-Install-and-Use-the-Linux-Bash-Shell-on-Windows-10/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>如何在 Windows 10 上安装和使用 Linux Bash Shell | 野生程序猴子</title>
+  
+    <script>
+      function sendPageView() {
+        if (CONFIG.hostname !== location.hostname) return;
+        var uid = localStorage.getItem('uid') || (Math.random() + '.' + Math.random());
+        localStorage.setItem('uid', uid);
+        navigator.sendBeacon('https://www.google-analytics.com/collect', new URLSearchParams({
+          v  : 1,
+          tid: 'UA-71060796-2',
+          cid: uid,
+          t  : 'pageview',
+          dp : encodeURIComponent(location.pathname)
+        }));
+      }
+      document.addEventListener('pjax:complete', sendPageView);
+      sendPageView();
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="野生程序猴子" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">野生程序猴子</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://ljason.cn/How-to-Install-and-Use-the-Linux-Bash-Shell-on-Windows-10/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="LJason">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="野生程序猴子">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          如何在 Windows 10 上安装和使用 Linux Bash Shell
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2017-03-31 22:47:10" itemprop="dateCreated datePublished" datetime="2017-03-31T22:47:10+08:00">2017-03-31</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-04-29 00:36:30" itemprop="dateModified" datetime="2020-04-29T00:36:30+08:00">2020-04-29</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BF%BB%E8%AF%91/" itemprop="url" rel="index"><span itemprop="name">翻译</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <img src="/How-to-Install-and-Use-the-Linux-Bash-Shell-on-Windows-10/00.webp" class="">
+
+<p>　　<a href="http://www.howtogeek.com/248177/whats-new-in-windows-10s-anniversary-update/" target="_blank" rel="noopener">Windows 10 的周年更新</a>为开发人员提供了一个巨大的新功能：一个完整的、基于 Ubuntu 的 Bash Shell，可以直接在 Windows 上运行 Linux 软件。这是微软通过添加新的 “Windows Subsystem for Linux”（Windows 的 Linux 子系统，下文简称 WSL） 实现的。</p>
+<a id="more"></a>
+
+<h2 id="有关-Windows-10-的-Bash-Shell"><a href="#有关-Windows-10-的-Bash-Shell" class="headerlink" title="有关 Windows 10 的 Bash Shell"></a>有关 Windows 10 的 Bash Shell</h2><p>　　这不是<a href="http://www.howtogeek.com/196060/beginner-geek-how-to-create-and-use-virtual-machines/" target="_blank" rel="noopener">虚拟机</a>、容器或为 Windows 编译的 Linux 软件（像 <a href="http://www.howtogeek.com/howto/41382/how-to-use-linux-commands-in-windows-with-cygwin/" target="_blank" rel="noopener">Cygwin</a>）。恰恰相反，Windows 10 获得了一个 Linux 子系统，它基于早已被微软遗弃的在 Windows 上运行 Android 应用的 Astoria 项目。</p>
+<p>　　这可以认为和 <a href="http://www.howtogeek.com/105271/how-to-run-windows-software-on-ubuntu-with-wine/" target="_blank" rel="noopener">Wine</a> 相反。Wine 允许直接在 Linux 系统上运行 Windows 应用，WSL 可以在 Windows 上运行 Linux 应用。</p>
+<p>　　微软已经和 Canonical 公司合作，致力于打造一个完整的、基于 Ubuntu 的、运行在这个子系统顶层的 Bash Shell。从技术层面上讲这完全不是 Linux。Linux 是底层操作系统内核，这在这里是不适用的。但是它运行的 Bash Shell 和二进制文件与 Ubuntu 上运行的完全相同。纯粹的自由软件主义者认为，一般的 Linux 操作系统应该被称为 “<a href="http://www.howtogeek.com/139287/the-great-debate-is-it-linux-or-gnulinux/" target="_blank" rel="noopener">GNU/Linux</a>”，因为它真的是有很多 GNU 软件在 Linux 内核上运行。你得到的 Bash Shell 只是 GNU 工具和其他软件而已。</p>
+<p>　　但是这里有一些限制：无法运行服务器软件、不能运行带图形界面的软件，它只适用于想在 Windows 上运行 Linux 命令的程序猿。这些应用程序可以访问 Windows 文件系统，但不能使用 Bash 命令来自动化正常的 Windows 程序，或从标准的 Windows 命令来启动 Bash 命令。仅仅是可以访问相同的 Windows 文件系统，仅此而已。不是每个命令行程序都可以正常工作，因为 WSL 仍处在测试阶段。</p>
+<h2 id="如何在-Windows-10-安装-Bash"><a href="#如何在-Windows-10-安装-Bash" class="headerlink" title="如何在 Windows 10 安装 Bash"></a>如何在 Windows 10 安装 Bash</h2><p>　　在这之前，请确保已经安装 Windows 10 周年版或者更新。这里只适用于 64位的 Windows 系统，如果您仍使用32位的系统，那是时候<a href="http://www.howtogeek.com/228042/how-to-switch-from-32-bit-windows-10-to-64-bit-windows-10/" target="_blank" rel="noopener">用64位的 Windows 10 系统</a>了。</p>
+<p>　　当确定使用的是正确的 Win10 版本后，打开 <strong>“应用”</strong>，然后转到 <strong>“更新和安全”</strong> &gt; <strong>“针对开发人员”</strong>，在这里选择 <strong>“开发人员模式”</strong>。</p>
+<img src="/How-to-Install-and-Use-the-Linux-Bash-Shell-on-Windows-10/01.webp" class="">
+
+<p>　　接下来打卡控制面板，单击 <strong>“程序”</strong>，然后单击 <strong>“程序和功能”</strong> 下的 <strong>“打开或关闭 Windows 功能”</strong>。在列表中勾选 <strong>“适用于 Linux 的 Windows 子系统（Beta）”</strong>，然后单击 <strong>“确定”</strong>。</p>
+<img src="/How-to-Install-and-Use-the-Linux-Bash-Shell-on-Windows-10/02.webp" class="">
+
+<p>　　完成后系统会提示您重启计算机，单击 <strong>“立即重新启动”</strong>，Windows 10 将会安装新功能。</p>
+<p>　　重启计算机之后，单击开始按钮（或按 Win 键），输入 <strong>“bash”</strong> 后回车。</p>
+<img src="/How-to-Install-and-Use-the-Linux-Bash-Shell-on-Windows-10/03.webp" class="">
+
+<p>　　当您第一次运行 bash.exe 文件时，系统将提示您接受服务条款，然后该命令将从 Windows 应用商店下载 <strong>“Bash on Ubuntu on Windows”</strong> 程序。之后系统会要求您创建用于在 Bash 环境中使用的用户账户和密码（注：不是 Windows 系统的账号密码）。</p>
+<img src="/How-to-Install-and-Use-the-Linux-Bash-Shell-on-Windows-10/04.webp" class="">
+
+<p>　　如果您想要自动化安装 Bash，可以在命令提示符窗口运行以下命令。这将自动同意所有提示，并且将默认用户设置为 “root”，不使用密码：</p>
+<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lxrun <span class="string">/install</span> <span class="string">/y</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="如何使用-Ubuntu-的-Bash-Shell-并且安装-Linux-软件"><a href="#如何使用-Ubuntu-的-Bash-Shell-并且安装-Linux-软件" class="headerlink" title="如何使用 Ubuntu 的 Bash Shell 并且安装 Linux 软件"></a>如何使用 Ubuntu 的 Bash Shell 并且安装 Linux 软件</h2><p>　　你现在有一个完整的基于 Ubuntu 的 Bash shell 了。由于它和 Ubuntu 使用的是相同的二进制文件，所以您可以使用 Ubuntu 的 <strong>“apt-get”</strong> 命令从 Ubuntu 的软件源安装软件。您可以运行 Linux 所有的命令，虽然不是每个命令都可以正常运行——特别是最初的测试版本。</p>
+<p>　　要打开 Bash shell，只需要在你的开始菜单搜索 <strong>“bash”</strong> 或 <strong>“Ubuntu”</strong>。你会看到一个 <strong>“Bash on Ubuntu on Windows”</strong> 的程序（注：由于旧版中文的 Win10 系统会将英文的符号 <strong>“.”</strong> 换成 <strong>“。”</strong>，所以原本的快捷方式就失效了。可以去 <strong>“C:\Users\用户名\AppData\Roaming\Microsoft\Windows\Start Menu\Programs”</strong> 中手动将 <strong>“Windows 中的 Bash on Ubuntu。lnk”</strong> 重命名 <strong>“Windows 中的 Bash on Ubuntu.lnk”</strong> ，回车即可看见白色的未知图标变成了 Ubuntu，创意者更新则没有此问题）。您可以将此快捷方式固定到您的开始菜单、任务栏或者桌面，以方便访问。</p>
+<img src="/How-to-Install-and-Use-the-Linux-Bash-Shell-on-Windows-10/05.webp" class="">
+
+<p>　　如果你有在 Linux、Mac OS 或其他平台使用 Bash shell 的经验，你就会用的得心应手。你不需要使用 <strong>“<a href="http://www.howtogeek.com/111479/htg-explains-whats-the-difference-between-sudo-su/" target="_blank" rel="noopener">sudo</a>”</strong> 了，因为你已经是 root 用户了。在 UNIX 平台上，<strong>“root”</strong> 用户具有绝对的系统访问权限，就像 Windows 上的 <strong>“Administrator”</strong> 用户一样。在 Bash shell 环境中您的 Windows 文件系统位于 /mnt/c 中。</p>
+<p>　　它和 Linux 终端的用法一样，如果你熟悉标准 Windows 的 DOS 命令，这里有一下相似的基本命令：</p>
+<ul>
+<li>改变目录<ul>
+<li>Bash：<strong>cd</strong></li>
+<li>DOS：<strong>cd</strong> 或 <strong>chdir</strong></li>
+</ul>
+</li>
+<li>列出目录内容<ul>
+<li>Bash：<strong>ls</strong></li>
+<li>DOS：<strong>dir</strong></li>
+</ul>
+</li>
+<li>移动或重命名<ul>
+<li>Bash：<strong>mv</strong></li>
+<li>DOS：<strong>move</strong> 和 <strong>rename</strong></li>
+</ul>
+</li>
+<li>复制文件<ul>
+<li>Bash：<strong>cp</strong></li>
+<li>DOS：<strong>copy</strong></li>
+</ul>
+</li>
+<li>删除文件<ul>
+<li>Bash：<strong>rm</strong></li>
+<li>DOS：<strong>del</strong> 或 <strong>erase</strong></li>
+</ul>
+</li>
+<li>创建目录<ul>
+<li>Bash：<strong>mkdir</strong></li>
+<li>DOS：<strong>mkdir</strong></li>
+</ul>
+</li>
+<li>编辑文件<ul>
+<li>Bash：<strong>vi</strong> 或 <strong>nano</strong></li>
+<li>DOS：<strong>edit</strong></li>
+</ul>
+</li>
+</ul>
+<p>　　有个很重要的需要记住，WSL 不像 Windows ，Bash Shell 和 它的 Linux 环境是区分大小写的。换句话说，大写字母开头的 “File.txt” 和 小写开头的 “file.txt” 是两个不同的文件。</p>
+<p>　　更多相关说明请参阅我们的 <a href="http://www.howtogeek.com/140679/beginner-geek-how-to-start-using-the-linux-terminal/" target="_blank" rel="noopener">Linux 命令初级指南</a> 和其他类似介绍 Bash Shell、Ubuntu 命令和 Linux 终端的资料。  </p>
+<img src="/How-to-Install-and-Use-the-Linux-Bash-Shell-on-Windows-10/06.webp" class="">
+
+<p>　　你需要使用 <a href="http://www.howtogeek.com/63997/how-to-install-programs-in-ubuntu-in-the-command-line/" target="_blank" rel="noopener">apt-get</a> 命令来安装和更新 Ubuntu 环境，并确保在这些命令前加上 <strong>“sudo”</strong>，这个命令可以使它以 root 用户的身份运行——就像 Windows 的 Administrator。这里有一些需要知道的：</p>
+<ul>
+<li>下载可更新包的更新信息：<strong>sudo apt-get update</strong></li>
+<li>安装应用程序：<strong>sudo apt-get install <em>包名</em></strong></li>
+<li>卸载应用程序：<strong>sudo apt-get remove <em>包名</em></strong></li>
+<li>搜索可用的软件：<strong>sudo apt-cache search <em>关键字</em></strong></li>
+<li>下载并安装升级包：<strong>sudo apt-get upgrade</strong></li>
+</ul>
+<p>　　下载并安装应用程序后，可以在提示符处键入其名称，然后按 <em>Enter</em> 运行。检查特定应用程序的文档以获取更多详细信息。  </p>
+<img src="/How-to-Install-and-Use-the-Linux-Bash-Shell-on-Windows-10/07.webp" class="">
+
+<h2 id="福利：安装-Ubuntu-字体以获得真正的-Ubuntu-体验"><a href="#福利：安装-Ubuntu-字体以获得真正的-Ubuntu-体验" class="headerlink" title="福利：安装 Ubuntu 字体以获得真正的 Ubuntu 体验##"></a>福利：安装 Ubuntu 字体以获得真正的 Ubuntu 体验##</h2><p>　　如果想在 Win10 上获得更爽的 Ubuntu 体验，还可以安装 Ubuntu 字体并在终端中启用它们。</p>
+<p>　　从 <a href="http://font.ubuntu.com/" target="_blank" rel="noopener">Ubuntu 的网站</a> 上下载 Ubuntu 系列字体。打开下载的 zip 文件，找到 <strong>UbuntuMono-R.ttf</strong> 文件，这个是 Ubuntu 等宽字体，终端中使用的唯一一种字体，也是唯一需要安装的字体。  </p>
+<img src="/How-to-Install-and-Use-the-Linux-Bash-Shell-on-Windows-10/08.webp" class="">
+
+<p>　　双击 <strong>UbuntuMono-R.ttf</strong> 文件，您将看到该字体的预览，单击 “安装” 将其安装在系统上。  </p>
+<img src="/How-to-Install-and-Use-the-Linux-Bash-Shell-on-Windows-10/09.webp" class="">
+
+<p>　　要使 Ubuntu 等宽字体成为控制台中的一个选项，您需要向Windows注册表添加一个设置：</p>
+<ol>
+<li><p>Win + R 打开注册表编辑器，键入 <strong>regedit</strong>，然后按回车，导航到以下项：</p>
+<figure class="highlight taggerscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">HKEY_LOCAL_MACHINE<span class="symbol">\S</span>OFTWARE<span class="symbol">\M</span>icrosoft<span class="symbol">\W</span>indows NT<span class="symbol">\C</span>urrentVersion<span class="symbol">\C</span>onsole<span class="symbol">\T</span>rueTypeFont</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>右键单击右窗格并选择新建 &gt; 字符串值，命名为 <strong>000</strong>。</p>
+</li>
+<li><p>双击刚刚创建的 <strong>000</strong> 字符串，并输入 <strong>Ubuntu Mono</strong> 作为其值数据。  </p>
+</li>
+</ol>
+<img src="/How-to-Install-and-Use-the-Linux-Bash-Shell-on-Windows-10/10.webp" class="">
+
+<ol start="4">
+<li>启动 Bash，右键单击标题栏，然后选择“属性”。单击“字体”选项卡，然后在字体列表中选择“Ubuntu Mono”。  </li>
+</ol>
+<img src="/How-to-Install-and-Use-the-Linux-Bash-Shell-on-Windows-10/11.webp" class="">
+
+<p>　　记住，安装在 Bash shell 中的软件仅限于 Bash shell。您无法从命令提示符，PowerShell 或 Windows 中的其他位置访问它。Bash shell 中的软件也不能与 Windows 程序直接交互或启动，尽管 Bash 环境和 Windows 可以访问您计算机上相同的文件。</p>
+<p>　　但是，您可以创建 Bash shell 脚本（.sh脚本）并使用 Bash shell 运行它们。</p>
+<p>LJason 译</p>
+<p>原文：<a href="http://www.howtogeek.com/249966/how-to-install-and-use-the-linux-bash-shell-on-windows-10/" target="_blank" rel="noopener">How to Install and Use the Linux Bash Shell on Windows 10</a></p>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div>如果你喜欢我的博客，那就请我吃冰淇淋吧（づ￣3￣）づ╭❤～</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.png" alt="LJason 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="LJason 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>LJason
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://ljason.cn/How-to-Install-and-Use-the-Linux-Bash-Shell-on-Windows-10/" title="如何在 Windows 10 上安装和使用 Linux Bash Shell">https://ljason.cn/How-to-Install-and-Use-the-Linux-Bash-Shell-on-Windows-10/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+        
+
+  <div class="followme">
+    <p>欢迎关注我的其它发布渠道</p>
+
+    <div class="social-list">
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="https://twitter.com/LJason77">
+            <span class="icon">
+              <i class="fab fa-twitter"></i>
+            </span>
+
+            <span class="label">Twitter</span>
+          </a>
+        </div>
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="https://t.me/LJason">
+            <span class="icon">
+              <i class="fab fa-telegram"></i>
+            </span>
+
+            <span class="label">Telegram</span>
+          </a>
+        </div>
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+        </div>
+    </div>
+  </div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E7%BF%BB%E8%AF%91/" rel="tag"># 翻译</a>
+              <a href="/tags/Win10/" rel="tag"># Win10</a>
+              <a href="/tags/WSL/" rel="tag"># WSL</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Linux-SetUp-IntelliJ-IDEA/" rel="prev" title="Linux 下安装 IntelliJ IDEA">
+      <i class="fa fa-chevron-left"></i> Linux 下安装 IntelliJ IDEA
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/Linux-SetUp-hexo/" rel="next" title="个人博客搭建3——hexo">
+      个人博客搭建3——hexo <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#有关-Windows-10-的-Bash-Shell"><span class="nav-number">1.</span> <span class="nav-text">有关 Windows 10 的 Bash Shell</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何在-Windows-10-安装-Bash"><span class="nav-number">2.</span> <span class="nav-text">如何在 Windows 10 安装 Bash</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何使用-Ubuntu-的-Bash-Shell-并且安装-Linux-软件"><span class="nav-number">3.</span> <span class="nav-text">如何使用 Ubuntu 的 Bash Shell 并且安装 Linux 软件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#福利：安装-Ubuntu-字体以获得真正的-Ubuntu-体验"><span class="nav-number">4.</span> <span class="nav-text">福利：安装 Ubuntu 字体以获得真正的 Ubuntu 体验##</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">LJason</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">43</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">51</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/LJason77" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LJason77" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:ljason@ljason.cn" title="E-Mail → mailto:ljason@ljason.cn"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/LJason77" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;LJason77" rel="noopener" target="_blank"><i class="fab fa-twitter fa-fw"></i>Twitter</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.youtube.com/channel/UCQkIv5pqfeCdBpvNwGgkGxg?view_as=subscriber" title="YouTube → https:&#x2F;&#x2F;www.youtube.com&#x2F;channel&#x2F;UCQkIv5pqfeCdBpvNwGgkGxg?view_as&#x3D;subscriber" rel="noopener" target="_blank"><i class="fab fa-youtube fa-fw"></i>YouTube</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.instagram.com/ljason77/" title="Instagram → https:&#x2F;&#x2F;www.instagram.com&#x2F;ljason77&#x2F;" rel="noopener" target="_blank"><i class="fab fa-instagram fa-fw"></i>Instagram</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">LJason</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/disqusjs@1/dist/disqusjs.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/disqusjs@1/dist/disqus.js', () => {
+    window.dsqjs = new DisqusJS({
+      api       : '' || 'https://disqus.com/api/',
+      apikey    : 'FwKuMa70aljw150V4NCz1NeCCiOaulpmRYKY2mT1ogMCX29oqVcdu9HFniPS8JrD',
+      shortname : '951203598',
+      url       : "https://ljason.cn/How-to-Install-and-Use-the-Linux-Bash-Shell-on-Windows-10/",
+      identifier: "How-to-Install-and-Use-the-Linux-Bash-Shell-on-Windows-10/",
+      title     : "如何在 Windows 10 上安装和使用 Linux Bash Shell",
+    });
+  }, window.DisqusJS);
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="005SuinPhVVcjIK7c7flsNVdrDPrmLYPfUJQgH27uOI">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"ljason.cn","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="想要开发 Android，必不可少的就是 Android SDK，因此了解 SDK 是必不可少的。这篇博客就是写有关 Android SDK 的。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android开发基础01——Android SDK">
+<meta property="og:url" content="https://ljason.cn/Android-Develop-Base-SDK/">
+<meta property="og:site_name" content="野生程序猴子">
+<meta property="og:description" content="想要开发 Android，必不可少的就是 Android SDK，因此了解 SDK 是必不可少的。这篇博客就是写有关 Android SDK 的。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2015-11-04T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-04-28T16:36:31.568Z">
+<meta property="article:author" content="LJason">
+<meta property="article:tag" content="Android">
+<meta property="article:tag" content="教程">
+<meta property="article:tag" content="基础">
+<meta property="article:tag" content="Android SDK">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://ljason.cn/Android-Develop-Base-SDK/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Android开发基础01——Android SDK | 野生程序猴子</title>
+  
+    <script>
+      function sendPageView() {
+        if (CONFIG.hostname !== location.hostname) return;
+        var uid = localStorage.getItem('uid') || (Math.random() + '.' + Math.random());
+        localStorage.setItem('uid', uid);
+        navigator.sendBeacon('https://www.google-analytics.com/collect', new URLSearchParams({
+          v  : 1,
+          tid: 'UA-71060796-2',
+          cid: uid,
+          t  : 'pageview',
+          dp : encodeURIComponent(location.pathname)
+        }));
+      }
+      document.addEventListener('pjax:complete', sendPageView);
+      sendPageView();
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="野生程序猴子" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">野生程序猴子</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://ljason.cn/Android-Develop-Base-SDK/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="LJason">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="野生程序猴子">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Android开发基础01——Android SDK
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2015-11-05 00:00:00" itemprop="dateCreated datePublished" datetime="2015-11-05T00:00:00+08:00">2015-11-05</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-04-29 00:36:31" itemprop="dateModified" datetime="2020-04-29T00:36:31+08:00">2020-04-29</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android%E5%BC%80%E5%8F%91/" itemprop="url" rel="index"><span itemprop="name">Android开发</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>　　想要开发 Android，必不可少的就是 Android SDK，因此了解 SDK 是必不可少的。这篇博客就是写有关 Android SDK 的。</p>
+<a id="more"></a>
+
+<h1 id="Android-SDK-结构"><a href="#Android-SDK-结构" class="headerlink" title="Android SDK 结构"></a>Android SDK 结构</h1><ul>
+<li><p><strong>add-ons</strong><br>这里面保存着附加库，比如 GoogleMaps，当然你如果安装了 OphoneSDK，这里也会有一些类库在里面。  </p>
+</li>
+<li><p><strong>build-tools</strong><br>保存着一些 Android 平台相关通用工具，比如 adb、和 aapt、aidl、dx 等文件。  </p>
+<ul>
+<li><p><strong>aapt</strong><br>Android Asset Packaging Tool , 该工具可以查看, 创建, 更新 ZIP 格式的文档附件(zip, jar, apk)，也可将资源文件编译成二进制文件。  </p>
+</li>
+<li><p><strong>adb</strong><br>android debug bridge 管理模拟器和真机的万能工具。  </p>
+</li>
+<li><p><strong>AIDL</strong><br>Android Interface definition language，它是一种 Android 内部进程通信接口的描述语言，通过它我们可以定义进程间的通信接口。  </p>
+</li>
+<li><p><strong>Dexdump</strong><br>Android Emulator 中可以找到一个名为 dexdump 的程序，通过 dexdump 可以查看出 apk 文件中的 dex 执行情况，粗略分析出原始 java 代码是什么样的，和 Dot Net 中的 Reflector 很像。  </p>
+</li>
+<li><p><strong>dx</strong><br>Dx gongju 将 .class 字节码（bytecode）转换为 Android 字节码（保存在 .dex 文件中）。  </p>
+</li>
+</ul>
+</li>
+<li><p><strong>docs</strong><br>这里面是 Android SDK API 参考文档，所有的 API 都可以在这里查到。  </p>
+</li>
+<li><p><strong>extras</strong><br>该文件夹下存放了 Google 提供的 USB 驱动、Intel 提供的硬件加速等附加工具包。  </p>
+</li>
+<li><p><strong>platforms</strong><br>这是每个版本的 SDK 真正的文件，存放了不同版本的 Android 系统。里面会根据 APILevel 划分 SDK 版本。  </p>
+<ul>
+<li><p><strong>android.jar</strong><br>是该版本的主要 framework 文件。  </p>
+</li>
+<li><p><strong>data</strong><br>保存着一些系统资源。  </p>
+</li>
+<li><p><strong>skins</strong><br>是 Android 模拟器的皮肤。  </p>
+</li>
+<li><p><strong>templates</strong><br>工程创建的默认模板。  </p>
+</li>
+</ul>
+</li>
+<li><p><strong>platform-tools</strong><br>保存着一些 Android 平台相关通用工具，比如 adb、和 aapt、aidl、dx 等文件，这里和 platforms 目录中 tools 文件夹有些重复，主要是从 Android 2.3 开始这些工具被划分为通用了。  </p>
+<ul>
+<li><p><strong>adb</strong><br>可以让你在模拟器或设备上安装应用程序的 .apk 文件，并从命令行访问模拟器或设备。你也可以用它把 Android 模拟器或设备上的应用程序代码和一个标准的调试器连接在一起。  </p>
+</li>
+<li><p><strong>Fastboot</strong><br>刷机工具。  </p>
+</li>
+<li><p><strong>sqlite3</strong><br>这个工具能够让你方便地访问 SQLite 数据文件。这些数据文件是由 Android 应用程序创建并使用的。  </p>
+</li>
+</ul>
+</li>
+<li><p><strong>samples</strong><br>Android SDK 自带的默认示例工程，对于 SQLite 数据库操作可以查看 NotePad，对于游戏开发可以看 Snake、LunarLander，对于Android 主题开发 Home 则是 Android M5 时代的主题设计原理。  </p>
+</li>
+<li><p><strong>sources</strong><br>Android 源代码。  </p>
+</li>
+<li><p><strong>system-images</strong><br>Android 虚拟机的镜像。</p>
+</li>
+<li><p><strong>tools</strong><br>这里包含了 Android 开发和调试的工具。draw9patch 则是绘制 Android 平台的可缩放 png 图片的工具，sqlite3 可以在 PC 上操作SQLite 数据库， 而 monkeyrunner 则是一个不错的压力测试应用，模拟用户随机按键，mksdcard 则是模拟器 SD 映像的创建工具，emulator 是 Android SDK 模拟器主程序，不过从 Android 1.5 开始，需要输入合适的参数才能启动模拟器，traceview 作为 Android 平台上重要的调试工具。  </p>
+<ul>
+<li><p><strong>ant</strong><br>ant 编译脚本。  </p>
+</li>
+<li><p><strong>ddms</strong><br>这个工具集成了 Dalvik（为Android平台定制的虚拟机（VM）），能够让你在模拟器或者设备上管理进程并协助调试。你可以使用它杀死进程，选择某个特定的进程来调试，产生跟踪数据，观察堆（heap）和线程信息，截取模拟器或设备的屏幕画面，还有更多的功能。</p>
+</li>
+<li><p><strong>draw9patch</strong><br>Draw 9-patch 工具允许你使用所见即所得（WYSIWYG）的编辑器轻松地创建 NinePatch 图形。它也可以预览经过拉伸的图像，高亮显示内容区域。</p>
+</li>
+<li><p><strong>emulator</strong><br>Android SDK 模拟器主程序，不过从 Android 1.5开始，需要输入合适的参数才能启动模拟器。  </p>
+</li>
+<li><p><strong>Hierarchy Viewer</strong><br>层级观察器工具允许你调试和优化你的用户界面。它用可视的方法把你视图（view）的布局层次展现出来，此外还给当前界面提供了一个具有像素栅格(grid)的放大镜观察器，这样你就可以正确地布局了。  </p>
+</li>
+<li><p><strong>monkeyrunner</strong><br>一个不错的压力测试应用，模拟用户随机按键。  </p>
+</li>
+<li><p><strong>mksdcard</strong><br>模拟器 SD 映像的创建工具。  </p>
+</li>
+<li><p><strong>templates</strong><br>工程创建的默认模板。  </p>
+</li>
+<li><p><strong>traceview</strong><br>这个工具可以将你的 Android 应用程序产生的跟踪日志（trace log）转换为图形化的分析视图。  </p>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="Android-SDK工具详解"><a href="#Android-SDK工具详解" class="headerlink" title="Android SDK工具详解"></a>Android SDK工具详解</h1><p>　　Android SDK 包含了各种各样的定制工具。  </p>
+<ul>
+<li><p><strong>Android Emulator(Android模拟器)</strong><br>它是在你的计算机上运行的一个虚拟移动设备。你可以使用模拟器来在一个实际的 Android 运行环境下设计，调试和测试你的应用程序。  </p>
+</li>
+<li><p><strong>Adb</strong><br>Android Debug Bridge(Android调试桥)工具可以让你在模拟器或设备上安装 apk 文件，并从命令行访问模拟器或设备。你也可以用它把Android 模拟器或设备上的应用程序代码和一个标准的调试器连接在一起。  </p>
+</li>
+<li><p><strong>Hierarchy Viewer(层级观察器)</strong><br>层级观察器工具允许你调试和优化你的用户界面。它用可视的方法把你的视图（view）的布局层次展现出来，此外还给当前界面提供了一个具有像素栅格(grid)的放大镜观察器，这样你就可以正确地布局了。  </p>
+</li>
+<li><p><strong>draw9patch</strong><br>Draw 9-patch 工具允许你使用所见即所得（WYSIWYG）的编辑器轻松地创建 NinePatch 图形。它也可以预览经过拉伸的图像，高亮显示内容区域。  </p>
+</li>
+<li><p><strong>Dalvik Debug Monitor Service(Dalvik 调试监视器服务)</strong><br>这个工具集成了 Dalvik（为Android平台定制的虚拟机（VM）），能够让你在模拟器或者设备上管理进程并协助调试。你可以使用它杀死进程，选择某个特定的进程来调试，产生跟踪数据，观察堆（heap）和线程信息，截取模拟器或设备的屏幕画面，还有更多的功能。  </p>
+</li>
+<li><p><strong>Android Asset Packaging Tool (aapt)</strong><br>可以让你在模拟器或设备上安装应用程序的 .apk 文件，并从命令行访问模拟器或设备。你也可以用它把 Android 模拟器或设备上的应用程序代码和一个标准的调试器连接在一起。  </p>
+</li>
+<li><p><strong>sqlite3</strong><br>这个工具能够让你方便地访问 SQLite 数据文件。这些数据文件是由 Android 应用程序创建并使用的。  </p>
+</li>
+<li><p><strong>traceview</strong><br>这个工具可以将你的 Android 应用程序产生的跟踪日志（trace log）转换为图形化的分析视图。  </p>
+</li>
+<li><p><strong>mksdcard</strong><br>帮助你创建磁盘映像（disk image），你可以在模拟器环境下使用磁盘映像来模拟外部存储卡（例如SD 卡）。  </p>
+</li>
+<li><p><strong>dx</strong><br>Dx gongju 将.class字节码（bytecode）转换为 Android 字节码（保存在 .dex 文件中）。  </p>
+</li>
+<li><p><strong>UI/Application Exerciser Monkey</strong><br>Monkey 是在模拟器上或设备上运行的一个小程序，它能够产生随机的用户事件流，例如点击(click)，触摸(touch)，手势（gestures），还有一系列的系统级事件。你可以使用 Monkey 来给你正在开发的程序做随机的、可重复的压力测试。  </p>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div>如果你喜欢我的博客，那就请我吃冰淇淋吧（づ￣3￣）づ╭❤～</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.png" alt="LJason 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="LJason 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>LJason
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://ljason.cn/Android-Develop-Base-SDK/" title="Android开发基础01——Android SDK">https://ljason.cn/Android-Develop-Base-SDK/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+        
+
+  <div class="followme">
+    <p>欢迎关注我的其它发布渠道</p>
+
+    <div class="social-list">
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="https://twitter.com/LJason77">
+            <span class="icon">
+              <i class="fab fa-twitter"></i>
+            </span>
+
+            <span class="label">Twitter</span>
+          </a>
+        </div>
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="https://t.me/LJason">
+            <span class="icon">
+              <i class="fab fa-telegram"></i>
+            </span>
+
+            <span class="label">Telegram</span>
+          </a>
+        </div>
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+        </div>
+    </div>
+  </div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Android/" rel="tag"># Android</a>
+              <a href="/tags/%E6%95%99%E7%A8%8B/" rel="tag"># 教程</a>
+              <a href="/tags/%E5%9F%BA%E7%A1%80/" rel="tag"># 基础</a>
+              <a href="/tags/Android-SDK/" rel="tag"># Android SDK</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Android-Develop-SetUp-Genymotion/" rel="prev" title="搭建Android开发环境05——Genymotion">
+      <i class="fa fa-chevron-left"></i> 搭建Android开发环境05——Genymotion
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/Blog-SetUp-One/" rel="next" title="个人博客搭建1——Windows（已过时）">
+      个人博客搭建1——Windows（已过时） <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Android-SDK-结构"><span class="nav-number">1.</span> <span class="nav-text">Android SDK 结构</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Android-SDK工具详解"><span class="nav-number">2.</span> <span class="nav-text">Android SDK工具详解</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">LJason</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">43</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">51</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/LJason77" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LJason77" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:ljason@ljason.cn" title="E-Mail → mailto:ljason@ljason.cn"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/LJason77" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;LJason77" rel="noopener" target="_blank"><i class="fab fa-twitter fa-fw"></i>Twitter</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.youtube.com/channel/UCQkIv5pqfeCdBpvNwGgkGxg?view_as=subscriber" title="YouTube → https:&#x2F;&#x2F;www.youtube.com&#x2F;channel&#x2F;UCQkIv5pqfeCdBpvNwGgkGxg?view_as&#x3D;subscriber" rel="noopener" target="_blank"><i class="fab fa-youtube fa-fw"></i>YouTube</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.instagram.com/ljason77/" title="Instagram → https:&#x2F;&#x2F;www.instagram.com&#x2F;ljason77&#x2F;" rel="noopener" target="_blank"><i class="fab fa-instagram fa-fw"></i>Instagram</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">LJason</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/disqusjs@1/dist/disqusjs.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/disqusjs@1/dist/disqus.js', () => {
+    window.dsqjs = new DisqusJS({
+      api       : '' || 'https://disqus.com/api/',
+      apikey    : 'FwKuMa70aljw150V4NCz1NeCCiOaulpmRYKY2mT1ogMCX29oqVcdu9HFniPS8JrD',
+      shortname : '951203598',
+      url       : "https://ljason.cn/Android-Develop-Base-SDK/",
+      identifier: "Android-Develop-Base-SDK/",
+      title     : "Android开发基础01——Android SDK",
+    });
+  }, window.DisqusJS);
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="005SuinPhVVcjIK7c7flsNVdrDPrmLYPfUJQgH27uOI">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"ljason.cn","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="我是一个重度拖延症晚期患者，总是有着各种理由、借口拖延各种事情（说实话真希望找个人来强迫我做计划做的事T_T）。那么久没写博客，都快忘记怎么写了。最近败了个树莓派，简直爱的不能再爱了，这小家伙为我创造了无限的可能。现在就来写写有关树莓派的东西。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="玩转树莓派01——初始化">
+<meta property="og:url" content="https://ljason.cn/RaspberryPi-One/">
+<meta property="og:site_name" content="野生程序猴子">
+<meta property="og:description" content="我是一个重度拖延症晚期患者，总是有着各种理由、借口拖延各种事情（说实话真希望找个人来强迫我做计划做的事T_T）。那么久没写博客，都快忘记怎么写了。最近败了个树莓派，简直爱的不能再爱了，这小家伙为我创造了无限的可能。现在就来写写有关树莓派的东西。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://ljason.cn/RaspberryPi-One/00.webp">
+<meta property="og:image" content="https://ljason.cn/RaspberryPi-One/01.webp">
+<meta property="og:image" content="https://ljason.cn/RaspberryPi-One/02.webp">
+<meta property="og:image" content="https://ljason.cn/RaspberryPi-One/03.webp">
+<meta property="og:image" content="https://ljason.cn/RaspberryPi-One/04.webp">
+<meta property="og:image" content="https://ljason.cn/RaspberryPi-One/05.webp">
+<meta property="og:image" content="https://ljason.cn/RaspberryPi-One/06.webp">
+<meta property="og:image" content="https://ljason.cn/RaspberryPi-One/07.webp">
+<meta property="og:image" content="https://ljason.cn/RaspberryPi-One/08.webp">
+<meta property="article:published_time" content="2016-04-06T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-04-28T16:36:31.784Z">
+<meta property="article:author" content="LJason">
+<meta property="article:tag" content="树莓派">
+<meta property="article:tag" content="RaspberryPi">
+<meta property="article:tag" content="docker">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://ljason.cn/RaspberryPi-One/00.webp">
+
+<link rel="canonical" href="https://ljason.cn/RaspberryPi-One/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>玩转树莓派01——初始化 | 野生程序猴子</title>
+  
+    <script>
+      function sendPageView() {
+        if (CONFIG.hostname !== location.hostname) return;
+        var uid = localStorage.getItem('uid') || (Math.random() + '.' + Math.random());
+        localStorage.setItem('uid', uid);
+        navigator.sendBeacon('https://www.google-analytics.com/collect', new URLSearchParams({
+          v  : 1,
+          tid: 'UA-71060796-2',
+          cid: uid,
+          t  : 'pageview',
+          dp : encodeURIComponent(location.pathname)
+        }));
+      }
+      document.addEventListener('pjax:complete', sendPageView);
+      sendPageView();
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="野生程序猴子" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">野生程序猴子</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://ljason.cn/RaspberryPi-One/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="LJason">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="野生程序猴子">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          玩转树莓派01——初始化
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2016-04-07 00:00:00" itemprop="dateCreated datePublished" datetime="2016-04-07T00:00:00+08:00">2016-04-07</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-04-29 00:36:31" itemprop="dateModified" datetime="2020-04-29T00:36:31+08:00">2020-04-29</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%A0%91%E8%8E%93%E6%B4%BE/" itemprop="url" rel="index"><span itemprop="name">树莓派</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>　　我是一个重度拖延症晚期患者，总是有着各种理由、借口拖延各种事情（说实话真希望找个人来强迫我做计划做的事T_T）。那么久没写博客，都快忘记怎么写了。最近败了个树莓派，简直爱的不能再爱了，这小家伙为我创造了无限的可能。现在就来写写有关树莓派的东西。  </p>
+<a id="more"></a>
+
+<h1 id="安装系统"><a href="#安装系统" class="headerlink" title="安装系统"></a>安装系统</h1><h2 id="需求："><a href="#需求：" class="headerlink" title="需求："></a>需求：</h2><ul>
+<li>树莓派一只  </li>
+<li>SD卡（不小于8G，SD卡速度影响系统性能，建议用 Class 10 或更高）  </li>
+</ul>
+<p>　　首先去<a href="https://www.raspberrypi.org/" target="_blank" rel="noopener">树莓派官网</a>下载最新的<a href="https://www.raspberrypi.org/downloads/raspbian/" target="_blank" rel="noopener" title="Raspbian">镜像</a>，建议新手用 Raspbian Buster Lite。  </p>
+<img src="/RaspberryPi-One/00.webp" class="">
+
+<p>　　下载完解压，得到 img 格式的镜像文件。</p>
+<h2 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h2><p>　　下载安装工具 <a href="https://sourceforge.net/projects/win32diskimager/" target="_blank" rel="noopener">Win32DiskImager</a>。SD 卡插上电脑，打开 Win32DiskImager。  </p>
+<img src="/RaspberryPi-One/01.webp" class="" title="[懒得开 Windows 所以这个图片就不更新了]">
+
+<p>　　点击文件夹图标选择镜像，后面选择SD卡的盘符，点击 <code>Write</code> 等待几分钟即可（写入时间取决于SD卡的速度），当提示 <code>Write Successful</code> 表示完成了，退出 Win32DiskImager。</p>
+<h2 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h2><p>　　下载工具 <a href="https://www.balena.io/etcher/" target="_blank" rel="noopener">balenaEtcher</a>。SD 卡插上电脑，打开 balenaEtcher。  </p>
+<p>　　操作和 Win32DiskImager 类似。</p>
+<h2 id="开机前配置"><a href="#开机前配置" class="headerlink" title="开机前配置"></a>开机前配置</h2><p>　　由于2016年11月25日更新的系统默认是关闭 SSH 的，可以通过在引导分区（boot）中创建名为 <strong>ssh</strong> 的空文件（无后缀）来启用（详细描述可以看官方博客 <a href="https://www.raspberrypi.org/blog/a-security-update-for-raspbian-pixel/" target="_blank" rel="noopener">A SECURITY UPDATE FOR RASPBIAN PIXEL</a>）。</p>
+<p>　　如果打算使用 Wi-Fi 来连接网络，还需要</p>
+<p>　　现在拔下SD卡，装入树莓派，开机。  </p>
+<h1 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h1><p>　　由于没有 <a href="https://zh.wikipedia.org/wiki/HDMI" target="_blank" rel="noopener" title="维基百科，自由的百科全书">HDMI</a> 线，所以我没有连接显示器，这就导致树莓派必须连接网线进行配置。连接网线后上路由器获得树莓派的 IP（前提路由器是自动分配IP）。如果无法登陆路由器，可以用手机去下载 <a href="https://play.google.com/store/apps/details?id=com.tools.netgel.netx" target="_blank" rel="noopener" title="Google Play">NetX</a> 来扫描获得树莓派的 IP。  </p>
+<img src="/RaspberryPi-One/02.webp" class="">
+
+<p>　　然后去下载安装 <a href="http://www.netsarang.com/download/down_xsh5.html" target="_blank" rel="noopener" title="Xshell 5 Download">Xshell 5</a> 作为 SSH 客户端（手机用 <a href="https://play.google.com/store/apps/details?id=com.sonelli.juicessh" target="_blank" rel="noopener" title="Google Play">JuiceSSH</a> ）。  </p>
+<p>　　打开 Xshell 5，新建会话，名称自定义、协议默认、主机填上树莓派IP、端口号默认，确定，选中会话，点击连接。（如果弹出 SSH 安全警告，点击接受）  </p>
+<img src="/RaspberryPi-One/03.webp" class="">
+
+<p>　　新系统的用户名一般都是默认 <code>pi</code>。  </p>
+<img src="/RaspberryPi-One/04.webp" class="">
+
+<p>　　然后输入密码，一般默认是 <code>raspberry</code>。  </p>
+<img src="/RaspberryPi-One/05.webp" class="">
+
+<p>　　这样就成功远程登陆树莓派了。  </p>
+<h2 id="启用-root-账户"><a href="#启用-root-账户" class="headerlink" title="启用 root 账户"></a>启用 root 账户</h2><p>　　我习惯第一件事就是启用 root。执行：  </p>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">sudo passwd root</span></span><br></pre></td></tr></table></figure>
+
+<p>　　输入两遍密码，如果提示 <code>passwd: password updated successfully</code> 则表示成功更改 root 密码。然后执行：  </p>
+<figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo passwd <span class="comment">--unlock root</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="更新系统"><a href="#更新系统" class="headerlink" title="更新系统"></a>更新系统</h2><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt -y update &amp;&amp; sudo apt -y<span class="built_in"> upgrade </span>&amp;&amp; sudo apt -y dist-upgrade &amp;&amp; sudo apt -y --purge autoremove &amp;&amp; sudo apt -y autoclean &amp;&amp; sudo rpi-update</span><br><span class="line">sudo reboot</span><br></pre></td></tr></table></figure>
+
+<h2 id="更新-vim"><a href="#更新-vim" class="headerlink" title="更新 vim"></a>更新 vim</h2><p>　　系统自带的 vi 是 vim-common，基本用不了，所以先卸载后再重新安装：</p>
+<figure class="highlight gml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt -<span class="symbol">y</span> purge vim-common &amp;&amp; sudo apt -<span class="symbol">y</span> --purge autoremove &amp;&amp; sudo apt -<span class="symbol">y</span> install --no-install-recommends vim</span><br><span class="line">rm -rf ~/.vimrc</span><br></pre></td></tr></table></figure>
+
+<p>　　安装 vi 后的配置，可以参考：<a href="https://raw.githubusercontent.com/LJason77/dotfiles/master/vim/.vimrc" target="_blank" rel="noopener">.vimrc</a>。</p>
+<p>　　其他配置也可以参考这个项目：<a href="https://github.com/LJason77/dotfiles" target="_blank" rel="noopener" title="我的配置文件">dotfiles</a>。</p>
+<h2 id="禁用-root-用户登录"><a href="#禁用-root-用户登录" class="headerlink" title="禁用 root 用户登录"></a>禁用 root 用户登录</h2><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vi <span class="regexp">/etc/</span>ssh<span class="regexp">/sshd_config</span></span><br></pre></td></tr></table></figure>
+
+<p>　　找到 <code>PermitRootLogin without-password</code> 改成 <code>PermitRootLogin no</code>，然后保存。</p>
+<h2 id="修改交换文件大小"><a href="#修改交换文件大小" class="headerlink" title="修改交换文件大小"></a>修改交换文件大小</h2><p>　　树莓派默认的交换文件大小是 ，这在我使用起来有点不够，所以修改大点：</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vi <span class="regexp">/etc/</span>dphys-swapfile</span><br></pre></td></tr></table></figure>
+
+<p>　　找到 <code>CONF_SWAPSIZE</code> 选项，修改为 <code>1024</code>。然后 <code>sudo systemctl restart dphys-swapfile.service</code> 重启服务。</p>
+<h2 id="安装常用软件"><a href="#安装常用软件" class="headerlink" title="安装常用软件"></a>安装常用软件</h2><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt -y --no-<span class="keyword">install</span>-recommends <span class="keyword">install</span> git gcc screen</span><br></pre></td></tr></table></figure>
+
+<h2 id="挂载硬盘"><a href="#挂载硬盘" class="headerlink" title="挂载硬盘"></a>挂载硬盘</h2><h3 id="挂载-NTFS"><a href="#挂载-NTFS" class="headerlink" title="挂载 NTFS"></a>挂载 NTFS</h3><p>　　我的U盘是 NTFS 格式的，而挂载 NTFS 需要 NTFS-3G，写博客的时候才知道大多数系统都是自带 NTFS-3G 的，所以无需重新下载源码重新编译了，如果你的系统太老以至于没有 NTFS-3G，请自行 Google 安装方法。（检验方法：输入 <code>ntfs</code> 按两下 Tab 能够出现 <code>ntfs-3g</code> ）  </p>
+<img src="/RaspberryPi-One/06.webp" class="">
+
+<p>　　查看 NTFS 分区：  </p>
+<figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fdisk -l <span class="string">| grep NTFS</span></span><br></pre></td></tr></table></figure>
+
+<img src="/RaspberryPi-One/07.webp" class="">
+
+<p>　　得到 <code>/dev/sda1</code>，执行：  </p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mkdir <span class="regexp">/mnt/</span>storage</span><br><span class="line">ntfs-<span class="number">3</span>g <span class="regexp">/dev/</span>sda1 <span class="regexp">/mnt/</span>storage</span><br></pre></td></tr></table></figure>
+
+<p>　　如果提示 <code>Mount is denied because the NTFS volume is already exclusively opened.</code>，则执行：  </p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">umount <span class="regexp">/dev/</span>sda1</span><br><span class="line">ntfs-<span class="number">3</span>g <span class="regexp">/dev/</span>sda1 <span class="regexp">/mnt/</span>storage</span><br></pre></td></tr></table></figure>
+
+<p>　　这下 NTFS 就成功挂载了，如果要开机自动挂载，就编辑 <code>/etc/fstab</code>，添加一行：  </p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/dev/sda1 		/mnt/storage 	ntfs<span class="number">-3</span>g silent,umask=<span class="number">0</span>,locale=zh_CN.utf8 <span class="number">0</span> <span class="number">0</span></span><br></pre></td></tr></table></figure>
+
+<img src="/RaspberryPi-One/08.webp" class="">
+
+<h3 id="挂载-ext4"><a href="#挂载-ext4" class="headerlink" title="挂载 ext4"></a>挂载 ext4</h3><p>　　2019 年了，存储设备也从当初 NTFS 格式的 U 盘升级为了 2T 的硬盘（需要自带电源的 USB 拓展器）。为了方便使用，我格式化成了 ext4。</p>
+<p>　　临时挂载：</p>
+<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo fdisk -l</span><br><span class="line">sudo mount <span class="string">/dev/sda1</span> <span class="string">/mnt</span></span><br></pre></td></tr></table></figure>
+
+<p>　　开机自动挂载（永久挂载）：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">"UUID=<span class="variable">$(ls -l  /dev/disk/by-uuid/ | grep sda1 | awk '&#123;print $9&#125;')</span> /mnt ext4 defaults 0 0"</span> | sudo tee -a /etc/fstab</span><br></pre></td></tr></table></figure>
+
+<h2 id="配置树莓派"><a href="#配置树莓派" class="headerlink" title="配置树莓派"></a>配置树莓派</h2><p>　　如果你要使用中文，可以在配置之前先安装中文字体。执行：  </p>
+<figure class="highlight gauss"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt -y --no-install-recommends install <span class="built_in">fonts</span>-wqy-zenhei <span class="built_in">fonts</span>-wqy-microhei <span class="built_in">fonts</span>-droid-fallback</span><br></pre></td></tr></table></figure>
+
+<p>　　raspi-config 是树莓派的系统配置工具，现在执行：  </p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo raspi-<span class="built_in">config</span></span><br></pre></td></tr></table></figure>
+
+<p>　　选择：  </p>
+<ul>
+<li><code>Localisation Options</code> （本地化选项）<ul>
+<li><code>Change Locale</code> （更改语言环境）<br>去掉 <code>en_GB.UTF-8 UTF-8</code>，选择 <code>es_US.UTF-8 UTF-8</code>、<code>zh_CN.GBK GBK</code>、<code>zh_CN.UTF-8 UTF-8</code>，按 Tab 键 OK 回车，默认系统语言设置为 <code>zh_CN.UTF-8</code>。  </li>
+<li><code>Change Timezone</code> （更改时区）<br><code>Asia</code>-<code>Chongqing</code>。  </li>
+</ul>
+</li>
+<li><code>Interfacing Options</code> （接口选项）<ul>
+<li><code>SSH</code><br>Yes。</li>
+</ul>
+</li>
+<li><code>Advanced Options</code> （高级选项）<ul>
+<li><code>Expand Filesystem</code>（扩展文件系统）<br>使树莓派充分利用整个SD卡。</li>
+</ul>
+</li>
+</ul>
+<p>　　<code>&lt;Finish&gt;</code>，回车，回车重启即可。  </p>
+<h2 id="连接-WiFi"><a href="#连接-WiFi" class="headerlink" title="连接 WiFi"></a>连接 WiFi</h2><p>　　由于我的是树莓派3代，自带蓝牙和无线，所以无需外接设备就能使用 WiFi。连接 WiFi 有两种方法：一种图形界面，进入上面所述的图形界面后右上角直接设置即可，太简单就不讲了；重点讲讲第二种。  </p>
+<p>　　编辑 <code>/etc/wpa_supplicant/wpa_supplicant.conf</code>，添加：  </p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">network=&#123;</span><br><span class="line">	<span class="attribute">ssid</span>=<span class="string">"WiFi name"</span></span><br><span class="line">	<span class="attribute">psk</span>=<span class="string">"12345678"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>　　这个可以参考手机上的 <code>/data/misc/wifi/wpa_supplicant.conf</code>。添加完之后重启网络来连接 WiFi：  </p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">sudo</span> <span class="selector-tag">systemctl</span> <span class="selector-tag">restart</span> <span class="selector-tag">networking</span><span class="selector-class">.service</span></span><br></pre></td></tr></table></figure>
+
+<p>　　喔，现在可以拔掉网线到处跑了。  </p>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div>如果你喜欢我的博客，那就请我吃冰淇淋吧（づ￣3￣）づ╭❤～</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.png" alt="LJason 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="LJason 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>LJason
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://ljason.cn/RaspberryPi-One/" title="玩转树莓派01——初始化">https://ljason.cn/RaspberryPi-One/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+        
+
+  <div class="followme">
+    <p>欢迎关注我的其它发布渠道</p>
+
+    <div class="social-list">
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="https://twitter.com/LJason77">
+            <span class="icon">
+              <i class="fab fa-twitter"></i>
+            </span>
+
+            <span class="label">Twitter</span>
+          </a>
+        </div>
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="https://t.me/LJason">
+            <span class="icon">
+              <i class="fab fa-telegram"></i>
+            </span>
+
+            <span class="label">Telegram</span>
+          </a>
+        </div>
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+        </div>
+    </div>
+  </div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%A0%91%E8%8E%93%E6%B4%BE/" rel="tag"># 树莓派</a>
+              <a href="/tags/RaspberryPi/" rel="tag"># RaspberryPi</a>
+              <a href="/tags/docker/" rel="tag"># docker</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Blog-SetUp-One/" rel="prev" title="个人博客搭建1——Windows（已过时）">
+      <i class="fa fa-chevron-left"></i> 个人博客搭建1——Windows（已过时）
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/RaspberryPi-Two/" rel="next" title="玩转树莓派02——搭建下载机">
+      玩转树莓派02——搭建下载机 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#安装系统"><span class="nav-number">1.</span> <span class="nav-text">安装系统</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#需求："><span class="nav-number">1.1.</span> <span class="nav-text">需求：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Windows"><span class="nav-number">1.2.</span> <span class="nav-text">Windows</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Linux"><span class="nav-number">1.3.</span> <span class="nav-text">Linux</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#开机前配置"><span class="nav-number">1.4.</span> <span class="nav-text">开机前配置</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#初始化"><span class="nav-number">2.</span> <span class="nav-text">初始化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#启用-root-账户"><span class="nav-number">2.1.</span> <span class="nav-text">启用 root 账户</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#更新系统"><span class="nav-number">2.2.</span> <span class="nav-text">更新系统</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#更新-vim"><span class="nav-number">2.3.</span> <span class="nav-text">更新 vim</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#禁用-root-用户登录"><span class="nav-number">2.4.</span> <span class="nav-text">禁用 root 用户登录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改交换文件大小"><span class="nav-number">2.5.</span> <span class="nav-text">修改交换文件大小</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装常用软件"><span class="nav-number">2.6.</span> <span class="nav-text">安装常用软件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#挂载硬盘"><span class="nav-number">2.7.</span> <span class="nav-text">挂载硬盘</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#挂载-NTFS"><span class="nav-number">2.7.1.</span> <span class="nav-text">挂载 NTFS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#挂载-ext4"><span class="nav-number">2.7.2.</span> <span class="nav-text">挂载 ext4</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置树莓派"><span class="nav-number">2.8.</span> <span class="nav-text">配置树莓派</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#连接-WiFi"><span class="nav-number">2.9.</span> <span class="nav-text">连接 WiFi</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">LJason</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">43</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">51</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/LJason77" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LJason77" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:ljason@ljason.cn" title="E-Mail → mailto:ljason@ljason.cn"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/LJason77" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;LJason77" rel="noopener" target="_blank"><i class="fab fa-twitter fa-fw"></i>Twitter</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.youtube.com/channel/UCQkIv5pqfeCdBpvNwGgkGxg?view_as=subscriber" title="YouTube → https:&#x2F;&#x2F;www.youtube.com&#x2F;channel&#x2F;UCQkIv5pqfeCdBpvNwGgkGxg?view_as&#x3D;subscriber" rel="noopener" target="_blank"><i class="fab fa-youtube fa-fw"></i>YouTube</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.instagram.com/ljason77/" title="Instagram → https:&#x2F;&#x2F;www.instagram.com&#x2F;ljason77&#x2F;" rel="noopener" target="_blank"><i class="fab fa-instagram fa-fw"></i>Instagram</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">LJason</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/disqusjs@1/dist/disqusjs.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/disqusjs@1/dist/disqus.js', () => {
+    window.dsqjs = new DisqusJS({
+      api       : '' || 'https://disqus.com/api/',
+      apikey    : 'FwKuMa70aljw150V4NCz1NeCCiOaulpmRYKY2mT1ogMCX29oqVcdu9HFniPS8JrD',
+      shortname : '951203598',
+      url       : "https://ljason.cn/RaspberryPi-One/",
+      identifier: "RaspberryPi-One/",
+      title     : "玩转树莓派01——初始化",
+    });
+  }, window.DisqusJS);
+});
+</script>
+
+</body>
+</html>

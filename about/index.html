@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="005SuinPhVVcjIK7c7flsNVdrDPrmLYPfUJQgH27uOI">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"ljason.cn","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="我是 LJason，一名自由的个人开发者 和小伙伴成立了一家公司，所以最近很少更新博客，但只要有空就尽量更新。   　　由于想自学 Django，无奈最新版没有中文文档，所以萌生了翻译文档的想法，一来提升英文水平，二来学习 Django。 　　文档用 reStructuredText 语言编写，使用 Sphinx 编译而成。 　　如有错误恳请在评论区指出，不胜感激。目前由我一人翻译，进度较慢，">
+<meta property="og:type" content="website">
+<meta property="og:title" content="关于我">
+<meta property="og:url" content="https://ljason.cn/about/">
+<meta property="og:site_name" content="野生程序猴子">
+<meta property="og:description" content="我是 LJason，一名自由的个人开发者 和小伙伴成立了一家公司，所以最近很少更新博客，但只要有空就尽量更新。   　　由于想自学 Django，无奈最新版没有中文文档，所以萌生了翻译文档的想法，一来提升英文水平，二来学习 Django。 　　文档用 reStructuredText 语言编写，使用 Sphinx 编译而成。 　　如有错误恳请在评论区指出，不胜感激。目前由我一人翻译，进度较慢，">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-04-28T16:36:27.408Z">
+<meta property="article:modified_time" content="2020-04-28T16:36:27.404Z">
+<meta property="article:author" content="LJason">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://ljason.cn/about/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : false,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>关于我 | 野生程序猴子
+</title>
+  
+    <script>
+      function sendPageView() {
+        if (CONFIG.hostname !== location.hostname) return;
+        var uid = localStorage.getItem('uid') || (Math.random() + '.' + Math.random());
+        localStorage.setItem('uid', uid);
+        navigator.sendBeacon('https://www.google-analytics.com/collect', new URLSearchParams({
+          v  : 1,
+          tid: 'UA-71060796-2',
+          cid: uid,
+          t  : 'pageview',
+          dp : encodeURIComponent(location.pathname)
+        }));
+      }
+      document.addEventListener('pjax:complete', sendPageView);
+      sendPageView();
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="野生程序猴子" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">野生程序猴子</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+  
+  
+
+          <div class="content page posts-expand">
+            
+
+    
+    
+    
+    <div class="post-block" lang="zh-CN">
+      <header class="post-header">
+
+<h1 class="post-title" itemprop="name headline">关于我
+</h1>
+
+<div class="post-meta">
+  
+
+</div>
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
+          <p>　　我是 LJason，<del>一名自由的个人开发者</del> 和小伙伴成立了一家公司，所以最近很少更新博客，但只要有空就尽量更新。  </p>
+<p>　　<del>由于想自学 Django，无奈最新版没有中文文档，所以萌生了翻译文档的想法，一来提升英文水平，二来学习 Django。</del></p>
+<p>　　<del>文档用 <a href="http://zh-sphinx-doc.readthedocs.io/en/latest/rest.html" target="_blank" rel="noopener" title="reStructuredText 语法">reStructuredText</a> 语言编写，使用 Sphinx 编译而成。</del></p>
+<p>　　<del>如有错误恳请在评论区指出，不胜感激。目前由我一人翻译，进度较慢，如果你愿意一起翻译，可以直接在下方评论区留言，或者直接联系我，我将非常欢迎。</del></p>
+<h3 id="挖的坑"><a href="#挖的坑" class="headerlink" title="挖的坑"></a>挖的坑</h3><ul>
+<li><del>翻译 Django 文档</del> 官方已有中文版，所以弃坑了。</li>
+</ul>
+<h3 id="信仰"><a href="#信仰" class="headerlink" title="信仰"></a>信仰</h3><ul>
+<li><a href="https://www.google.com" target="_blank" rel="noopener" title="www.google.com">自由</a></li>
+<li><a href="https://zh.wikipedia.org/wiki/%E6%B0%91%E4%B8%BB" target="_blank" rel="noopener" title="维基百科：民主">民主</a></li>
+<li><a href="https://zh.wikipedia.org/zh-cn/%E7%BE%8E%E5%9B%BD" target="_blank" rel="noopener" title="维基百科：美国">开放</a></li>
+<li><a href="https://zh.wikipedia.org/wiki/Google" target="_blank" rel="noopener" title="维基百科：Google">Google</a></li>
+<li><a href="https://zh.wikipedia.org/wiki/%E5%88%BA%E5%AE%A2%E6%95%99%E6%A2%9D%E7%B3%BB%E5%88%97" target="_blank" rel="noopener">刺客信条</a></li>
+<li><a href="https://zh.wikipedia.org/wiki/%E8%B5%84%E6%9C%AC%E4%B8%BB%E4%B9%89" target="_blank" rel="noopener" title="维基百科：资本主义">资本主义</a></li>
+</ul>
+<h3 id="爱好"><a href="#爱好" class="headerlink" title="爱好"></a>爱好</h3><ul>
+<li><a href="https://developer.android.com/index.html" target="_blank" rel="noopener" title="圣地">Android</a>、<a href="https://www.linux.com/" target="_blank" rel="noopener" title="第一次去→_→">Linux</a>、<a href="http://unity3d.com/" target="_blank" rel="noopener" title="Unity3D">游戏</a>开发</li>
+<li><a href="https://zh.wikipedia.org/wiki/%E5%BF%83%E7%90%86%E5%AD%A6" target="_blank" rel="noopener" title="维基百科：心理学">心理学</a>、<a href="https://zh.wikipedia.org/wiki/%E7%BB%8F%E6%B5%8E%E5%AD%A6" target="_blank" rel="noopener" title="维基百科：经济学">经济学</a>、<a href="https://zh.wikipedia.org/wiki/%E5%93%B2%E5%AD%A6" target="_blank" rel="noopener" title="维基百科：哲学">哲学</a></li>
+<li><a href="https://www.google.com" target="_blank" rel="noopener" title="信仰">Google</a></li>
+<li><a href="https://www.raspberrypi.org/" target="_blank" rel="noopener" title="超爱这小家伙">树莓派</a></li>
+<li><a href="https://ljason.cn/2016/07/03/Phantom3-4K-Unpacking.html">无人机</a></li>
+<li><a href="https://zh.wikipedia.org/wiki/%E6%9C%8D%E5%8A%A1%E5%99%A8" target="_blank" rel="noopener" title="维基百科：服务器">服务器</a></li>
+<li><a href="https://zh.wiktionary.org/zh/%E6%8A%98%E8%85%BE" target="_blank" rel="noopener" title="维基百科竟然有">折腾</a></li>
+</ul>
+<h3 id="擅长"><a href="#擅长" class="headerlink" title="擅长"></a>擅长</h3><ul>
+<li>Android 开发/逆向</li>
+<li>Unity3D</li>
+<li>Linux</li>
+<li>PS/AI/AE</li>
+<li>Node.js</li>
+<li>Docker</li>
+</ul>
+<h3 id="友链"><a href="#友链" class="headerlink" title="友链"></a>友链</h3><ul>
+<li><a href="https://printempw.github.io/" target="_blank" rel="noopener">PRIN BLOG</a></li>
+<li><a href="https://jandan.net/" target="_blank" rel="noopener" title="喜爱的小站">煎蛋</a></li>
+</ul>
+<h3 id="联系"><a href="#联系" class="headerlink" title="联系"></a>联系</h3><ul>
+<li><a href="https://t.me/LJason" target="_blank" rel="noopener">Telegram</a>  </li>
+</ul>
+
+      </div>
+      
+      
+      
+    </div>
+    
+
+    
+    
+    
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#挖的坑"><span class="nav-number">1.</span> <span class="nav-text">挖的坑</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#信仰"><span class="nav-number">2.</span> <span class="nav-text">信仰</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#爱好"><span class="nav-number">3.</span> <span class="nav-text">爱好</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#擅长"><span class="nav-number">4.</span> <span class="nav-text">擅长</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#友链"><span class="nav-number">5.</span> <span class="nav-text">友链</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#联系"><span class="nav-number">6.</span> <span class="nav-text">联系</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">LJason</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">43</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">51</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/LJason77" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LJason77" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:ljason@ljason.cn" title="E-Mail → mailto:ljason@ljason.cn"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/LJason77" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;LJason77" rel="noopener" target="_blank"><i class="fab fa-twitter fa-fw"></i>Twitter</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.youtube.com/channel/UCQkIv5pqfeCdBpvNwGgkGxg?view_as=subscriber" title="YouTube → https:&#x2F;&#x2F;www.youtube.com&#x2F;channel&#x2F;UCQkIv5pqfeCdBpvNwGgkGxg?view_as&#x3D;subscriber" rel="noopener" target="_blank"><i class="fab fa-youtube fa-fw"></i>YouTube</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.instagram.com/ljason77/" title="Instagram → https:&#x2F;&#x2F;www.instagram.com&#x2F;ljason77&#x2F;" rel="noopener" target="_blank"><i class="fab fa-instagram fa-fw"></i>Instagram</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">LJason</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/disqusjs@1/dist/disqusjs.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/disqusjs@1/dist/disqus.js', () => {
+    window.dsqjs = new DisqusJS({
+      api       : '' || 'https://disqus.com/api/',
+      apikey    : 'FwKuMa70aljw150V4NCz1NeCCiOaulpmRYKY2mT1ogMCX29oqVcdu9HFniPS8JrD',
+      shortname : '951203598',
+      url       : "https://ljason.cn/about/",
+      identifier: "about/index.html",
+      title     : "关于我",
+    });
+  }, window.DisqusJS);
+});
+</script>
+
+</body>
+</html>

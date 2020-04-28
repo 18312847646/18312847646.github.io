@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="005SuinPhVVcjIK7c7flsNVdrDPrmLYPfUJQgH27uOI">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"ljason.cn","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="你可能早就看过 ”API“ 这个词了。操作系统、浏览器和应用程序在更新时通常都会宣布新的 API，但什么是 API 呢？">
+<meta property="og:type" content="article">
+<meta property="og:title" content="什么是 API？">
+<meta property="og:url" content="https://ljason.cn/What-Is-An-API/">
+<meta property="og:site_name" content="野生程序猴子">
+<meta property="og:description" content="你可能早就看过 ”API“ 这个词了。操作系统、浏览器和应用程序在更新时通常都会宣布新的 API，但什么是 API 呢？">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://ljason.cn/What-Is-An-API/00.webp">
+<meta property="article:published_time" content="2018-03-23T03:04:26.000Z">
+<meta property="article:modified_time" content="2020-04-28T16:36:30.800Z">
+<meta property="article:author" content="LJason">
+<meta property="article:tag" content="翻译">
+<meta property="article:tag" content="API">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://ljason.cn/What-Is-An-API/00.webp">
+
+<link rel="canonical" href="https://ljason.cn/What-Is-An-API/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>什么是 API？ | 野生程序猴子</title>
+  
+    <script>
+      function sendPageView() {
+        if (CONFIG.hostname !== location.hostname) return;
+        var uid = localStorage.getItem('uid') || (Math.random() + '.' + Math.random());
+        localStorage.setItem('uid', uid);
+        navigator.sendBeacon('https://www.google-analytics.com/collect', new URLSearchParams({
+          v  : 1,
+          tid: 'UA-71060796-2',
+          cid: uid,
+          t  : 'pageview',
+          dp : encodeURIComponent(location.pathname)
+        }));
+      }
+      document.addEventListener('pjax:complete', sendPageView);
+      sendPageView();
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="野生程序猴子" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">野生程序猴子</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://ljason.cn/What-Is-An-API/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="LJason">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="野生程序猴子">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          什么是 API？
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-03-23 11:04:26" itemprop="dateCreated datePublished" datetime="2018-03-23T11:04:26+08:00">2018-03-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-04-29 00:36:30" itemprop="dateModified" datetime="2020-04-29T00:36:30+08:00">2020-04-29</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BF%BB%E8%AF%91/" itemprop="url" rel="index"><span itemprop="name">翻译</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>　　你可能早就看过 ”<strong>API</strong>“ 这个词了。操作系统、浏览器和应用程序在更新时通常都会宣布新的 API，但什么是 API 呢？</p>
+<a id="more"></a>
+
+<h1 id="应用程序接口"><a href="#应用程序接口" class="headerlink" title="应用程序接口"></a>应用程序接口</h1><p>　　<strong>API</strong> 是 <code>应用程序接口</code>（<em>Application Programming Interface</em>）的首字母缩写。</p>
+<p>　　API 就像餐馆里的菜单一样，菜单提供了你在餐馆可以点的菜以及每道菜的描述。当你点了菜以后，餐厅的厨房会做好你点的菜，并把菜端上来。你不知道餐厅是如何制作食物的，而你也并不需要知道。</p>
+<p>　　同样的，API 列出了开发人员可以使用的一系列操作，并说明了这些操作。比如：开发人员并不一定需要知道操作系统是如何进行 “另存为” 操作的，只需要知道如何调用 “另存为” 就行了。</p>
+<p>　　这并不是一个完美的比喻，因为开发人员可能必须向 API 提供他们自己的数据才能获得结果。所以这或许更像是一个高级餐厅，你可以向餐厅提供你自己的配料来制作食物。</p>
+<p>　　大致就是这样，API 允许开发人员利用平台的实现来完成基本工作，从而节省时间。这有助于减少开发人员需要创建的代码量，还有助于在同一平台为应用程序创建更高的一致性。API 还可以控制对硬件和软件资源的访问。</p>
+<h1 id="API-使开发人员的生活更轻松"><a href="#API-使开发人员的生活更轻松" class="headerlink" title="API 使开发人员的生活更轻松"></a>API 使开发人员的生活更轻松</h1><p>　　假设你想为 Android 开发应用程序，Google 的 Android 系统提供了大量的 <a href="https://developer.android.com/reference/packages.html" target="_blank" rel="noopener">API</a>，就像其他操作系统一样，让你的开发变得更加轻松。</p>
+<p>　　比如：如果你想要嵌入 Web 浏览器以显示一个或多个网页，并不需要为你的应用程序从头开始编写自己的 Web 浏览器。你可以使用 <a href="https://developer.android.com/reference/android/webkit/WebView.html" target="_blank" rel="noopener">WebView</a> API 在应用程序中嵌入 webkit 对象。</p>
+<p>　　如果你想从相机捕捉照片或视频，则无需编写自己的相机界面，你可以使用相机 API 将 Android 内置的相机嵌入到你的应用程序中。如果不存在这个 API，开发人员将不得不创建自己的相机软件并解析摄像头的输入。但是 Android 系统的开发人员已经完成了这些艰苦的工作，因此开发人员可以使用相机 API 嵌入相机，然后开始构建应用程序。而且，当 Google 改进相机 API 时，所有依赖它的应用程序都会自动利用这一改进。</p>
+<p>　　这适用于每个平台。你想在 Windows 上创建一个对话框？有这个 <a href="https://msdn.microsoft.com/library/windows/desktop/hh920508.aspx" target="_blank" rel="noopener">API</a> ；想在 Android 上支持指纹验证？这也有 <a href="https://developer.android.com/about/versions/marshmallow/android-6.0.html#fingerprint-authentication" target="_blank" rel="noopener" title="指纹身份验证">API</a>，因此你不必为每个不同的 Android 设备制造商测试指纹传感器。开发人员不必一遍又一遍的重复造轮子。</p>
+<h1 id="API-控制着对资源的访问"><a href="#API-控制着对资源的访问" class="headerlink" title="API 控制着对资源的访问"></a>API 控制着对资源的访问</h1><p>　　API 也用于控制对硬件设备和软件功能的访问，应用程序不一样具有使用许可。这就是为什么 API 经常在安全性方面发挥重要作用。</p>
+<p>　　比如，如果你曾今访问过某个网站并在浏览器中看到该网站要求查看你的确切位置的消息，这是该网站正在尝试在你的浏览器中使用地理定位 API。Web 浏览器公开这样的 API，以便 Web 开发人员轻松访问你的位置——他们可以询问 “你在哪？”，浏览器便通过访问 GPS 或附近的 Wi-Fi 网络来查找你的物理位置。</p>
+<img src="/What-Is-An-API/00.webp" class="">
+
+<p>　　但是，浏览器也会通过 API 公开这些信息，因为可以控制对其的访问。当网站想要访问你的确切位置时，唯一的方法就是通过位置 API 来获取。而且，当一个网站试图使用它时，你——用户——可以选择允许或拒绝这个请求。访问 GPS 传感器等硬件资源唯一的方法便是通过 API，因此浏览器可以控制对硬件的访问并限制应用程序可以执行的操作。</p>
+<p>　　在 iOS 和 Android 等现代移动操作系统中也使用相同的原理，可以通过控制其中的应用程序对 API 的访问来实施权限管理。比如，如果开发人员尝试通过相机 API 访问相机，则可以拒绝权限请求，该应用则无法访问设备的相机。</p>
+<p>使用权限的文件系统（如在 Windows、Mac 和 Linux 上执行的权限）具有由文件系统 API 执行的权限。典型的应用程序不能直接访问原始物理硬盘。相反，应用程序必须通过 API 访问文件。</p>
+<h1 id="API-用于服务之间的通信"><a href="#API-用于服务之间的通信" class="headerlink" title="API 用于服务之间的通信"></a>API 用于服务之间的通信</h1><p>　　API 也被用于各种途径。比如：经常可以看到嵌入 Google 地图的网站，该网站就是使用 Google 地图 API 实现的。Google 向 Web 开发者公开这样的 API，然后他们可以使用这些 API 在他们网站上实现复杂的对象。如果这样的 API 不存在，开发者可能必须创建他们自己的地图并提供他们自己的地图数据，以便在网站上放置一些交互式地图。</p>
+<p>　　而且，因为这是一个 API，Google 可以控制第三方网站对 Google 地图的访问，确保他们以一致的方式使用它，而不是试图混乱地嵌入显示 Google 地图网站的框架中。</p>
+<p>　　这适用于许多不同的在线服务。有 API 用于请求 Google 翻译，或者在网站上嵌入来自 Twitter 或 Facebook 的评论和推文。</p>
+<p>　　<a href="https://zh.wikipedia.org/wiki/%E5%BC%80%E6%94%BE%E6%8E%88%E6%9D%83" target="_blank" rel="noopener" title="维基百科：开放授权">开放授权</a> 还定义了许多 API，允许你使用其他服务登录网站。比如：使用你的 Facebook、Google 或 Twitter 账户登录到新网站，而无需为该网站创建新的用户账户。API 是定义开发人员如何与服务进行通讯的标准协议，以及开发人员期望收到的输出类型。</p>
+<p>　　如果你已经了解了这点，你就会对 API 的内容有更好的了解。最后，除非你是开发人员，否则你并不需要知道 API 是什么。但是，如果你看到软件平台或服务为各种硬件或服务添加了新的 API，开发人员应该会更容易应用这些功能。</p>
+<p>LJason 译</p>
+<p>原文：<a href="https://www.howtogeek.com/343877/what-is-an-api/" target="_blank" rel="noopener">What Is an API?</a></p>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div>如果你喜欢我的博客，那就请我吃冰淇淋吧（づ￣3￣）づ╭❤～</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.png" alt="LJason 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="LJason 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>LJason
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://ljason.cn/What-Is-An-API/" title="什么是 API？">https://ljason.cn/What-Is-An-API/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+        
+
+  <div class="followme">
+    <p>欢迎关注我的其它发布渠道</p>
+
+    <div class="social-list">
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="https://twitter.com/LJason77">
+            <span class="icon">
+              <i class="fab fa-twitter"></i>
+            </span>
+
+            <span class="label">Twitter</span>
+          </a>
+        </div>
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="https://t.me/LJason">
+            <span class="icon">
+              <i class="fab fa-telegram"></i>
+            </span>
+
+            <span class="label">Telegram</span>
+          </a>
+        </div>
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+        </div>
+    </div>
+  </div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E7%BF%BB%E8%AF%91/" rel="tag"># 翻译</a>
+              <a href="/tags/API/" rel="tag"># API</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Basic-Operation/" rel="prev" title="Git——基础操作">
+      <i class="fa fa-chevron-left"></i> Git——基础操作
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/Multiperson-Collaboration/" rel="next" title="Git——多人协作">
+      Git——多人协作 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#应用程序接口"><span class="nav-number">1.</span> <span class="nav-text">应用程序接口</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#API-使开发人员的生活更轻松"><span class="nav-number">2.</span> <span class="nav-text">API 使开发人员的生活更轻松</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#API-控制着对资源的访问"><span class="nav-number">3.</span> <span class="nav-text">API 控制着对资源的访问</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#API-用于服务之间的通信"><span class="nav-number">4.</span> <span class="nav-text">API 用于服务之间的通信</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">LJason</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">43</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">51</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/LJason77" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LJason77" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:ljason@ljason.cn" title="E-Mail → mailto:ljason@ljason.cn"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/LJason77" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;LJason77" rel="noopener" target="_blank"><i class="fab fa-twitter fa-fw"></i>Twitter</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.youtube.com/channel/UCQkIv5pqfeCdBpvNwGgkGxg?view_as=subscriber" title="YouTube → https:&#x2F;&#x2F;www.youtube.com&#x2F;channel&#x2F;UCQkIv5pqfeCdBpvNwGgkGxg?view_as&#x3D;subscriber" rel="noopener" target="_blank"><i class="fab fa-youtube fa-fw"></i>YouTube</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.instagram.com/ljason77/" title="Instagram → https:&#x2F;&#x2F;www.instagram.com&#x2F;ljason77&#x2F;" rel="noopener" target="_blank"><i class="fab fa-instagram fa-fw"></i>Instagram</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">LJason</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/disqusjs@1/dist/disqusjs.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/disqusjs@1/dist/disqus.js', () => {
+    window.dsqjs = new DisqusJS({
+      api       : '' || 'https://disqus.com/api/',
+      apikey    : 'FwKuMa70aljw150V4NCz1NeCCiOaulpmRYKY2mT1ogMCX29oqVcdu9HFniPS8JrD',
+      shortname : '951203598',
+      url       : "https://ljason.cn/What-Is-An-API/",
+      identifier: "What-Is-An-API/",
+      title     : "什么是 API？",
+    });
+  }, window.DisqusJS);
+});
+</script>
+
+</body>
+</html>
